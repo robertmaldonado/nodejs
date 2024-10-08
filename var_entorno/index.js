@@ -5,7 +5,7 @@
 
 
 // Importar dotenv con la sintaxis de ESM
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'; // type module
 
 // Configurar dotenv para cargar variables del archivo .env
 dotenv.config();
