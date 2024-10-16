@@ -1,1 +1,1 @@
-(() => import('./src/index.js'))();
+(() => import('./src/index.js'))();// agregamos esto para poder trabajar con mudulos es6 en el servidor ya que de esta forma funciona al desplegar de manera provicional
