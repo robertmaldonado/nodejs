@@ -42,6 +42,28 @@ router.post('/cadd', async (req, res) => {
     }
 });
 
+// Ruta para verificar la cédula
+// Ruta para verificar la cédula
+router.post("/check-cedula", async (req, res) => {
+    const { cedula } = req.body;
+
+    try {
+        // Ejecutar la consulta
+        const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
+
+        if (rows.length > 0) {
+            // Si la cédula existe
+            res.json({ exists: true, data: rows[0] });
+        } else {
+            // Si no existe
+            res.json({ exists: false });
+        }
+    } catch (error) {
+        console.error("Error al verificar la cédula:", error);
+        res.status(500).json({ error: "Error en el servidor" });
+    }
+});
+
 
 router.get('/list', async (req, res) => {
     try {

@@ -2,7 +2,7 @@
     <h2 class="text-center mb-4">Formulario</h2>
 
 
-    <form action="/cadd" method="post">
+    <form action="/cadd" method="post" id="form">
         <!-- Primera fila -->
         <div class="row mb-3">
             <div class="col-md-3">
@@ -68,7 +68,7 @@
             <div class="col-md-4">
 
 
-                <label for="saldo" class="form-label">gasto</label>
+                <label for="saldo" class="form-label">saldo</label>
                 <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
                     placeholder=" gasto total del cliente">
 
@@ -86,3 +86,50 @@
         </div>
     </form>
 </div>
+
+
+
+<script>
+    // Verificar si la cédula existe al desenfocar el campo
+    document.getElementById("cedula").addEventListener("blur", async () => {
+        const cedula = document.getElementById("cedula").value;
+
+        if (cedula) {
+            try {
+                // Realizar la solicitud POST con fetch
+                const response = await fetch("/check-cedula", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json", // Indicamos que enviamos JSON
+                    },
+                    body: JSON.stringify({ cedula }), // Convertir los datos a JSON
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+
+                const data = await response.json(); // Convertir la respuesta a JSON
+
+                if (data.exists) {
+                    const { name, correo } = data.data;
+                    document.getElementById("name").value = name;
+                    document.getElementById("correo").value = correo;
+                } else {
+                    {{!-- document.getElementById("name").value = ""; --}}
+                    {{!-- document.getElementById("correo").value = ""; --}}
+                }
+            } catch (error) {
+                console.error("Error verificando la cédula:", error);
+            }
+        }
+    });
+
+    // Manejar el envío del formulario
+    document.getElementById("form").addEventListener("submit", async (event) => {
+        event.preventDefault(); // Evitar envío predeterminadoo
+
+        // Si necesitas realizar operaciones adicionales, hazlo aquí
+        event.target.submit(); // Enviar el formulario manualmente
+    });
+</script>
