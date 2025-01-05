@@ -64,4 +64,8 @@ WHERE id = 27;
 ALTER TABLE clientes
 ADD COLUMN saldo DECIMAL(10,2);
 
+ALTER TABLE clientes ADD UNIQUE (correo);
+
+ALTER TABLE `clientes` ADD UNIQUE(`telefono`);
+
 

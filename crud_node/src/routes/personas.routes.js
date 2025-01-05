@@ -29,7 +29,10 @@ router.post('/add', async (req, res) => {
 
 // para agregar  un cliente
 router.post('/cadd', async (req, res) => {
+    console.log("recibiendo al guardar:", req.body);
+    // console.log(req.body);
     try {
+
         const { name, telefono, correo, fecha, cedula, nota, saldo } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
         const newcliente = {
             name, telefono, correo, fecha, cedula, nota, saldo  //  , telefono, correo, fecha, cedula, nota, gasto
@@ -44,13 +47,16 @@ router.post('/cadd', async (req, res) => {
 
 // Ruta para verificar la cédula
 // Ruta para verificar la cédula
-router.post("/check-cedula", async (req, res) => {
+router.post('/check-cedula', async (req, res) => {
     const { cedula } = req.body;
 
     try {
         // Ejecutar la consulta
-        const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
+        //const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
+        const query = "SELECT name,saldo, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE cedula = ?";
+        const [rows] = await pool.query(query, [cedula]);
 
+        console.log("recibienviado:", rows[0]);
         if (rows.length > 0) {
             // Si la cédula existe
             res.json({ exists: true, data: rows[0] });
@@ -111,5 +117,16 @@ router.get('/delete/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+async function buscarIdPorCedula(cedula) {
+
+}
+
+
+
+
+
+
 
 export default router;

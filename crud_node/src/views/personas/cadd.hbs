@@ -70,7 +70,7 @@
 
                 <label for="saldo" class="form-label">saldo</label>
                 <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
-                    placeholder=" gasto total del cliente">
+                    placeholder=" gasto total del cliente" readonly>
 
 
             </div>
@@ -110,14 +110,33 @@
                 }
 
                 const data = await response.json(); // Convertir la respuesta a JSON
+                console.log(data);
 
                 if (data.exists) {
-                    const { name, correo } = data.data;
+                    const { name, correo, fecha, telefono, nota, saldo } = data.data;
                     document.getElementById("name").value = name;
                     document.getElementById("correo").value = correo;
+                    document.getElementById("telefono").value = telefono;
+                    document.getElementById("nota").value = nota;
+                    document.getElementById("fecha").value = fecha;
+                    document.getElementById("saldo").value = saldo;
+
+
+
+                    //const fechax = new Date(data.fecha); // Convertir a objeto Date
+                    // Formatear la fecha (YYYY-MM-DD)
+                    //const fechaFormateada = fecha.toISOString().split("T")[0];
+                    // document.getElementById("fecha").textContent = fechaFormateada;
+
+
+
+                    console.log(name);
+                    console.log(fecha);
+                    //console.log(fechax);
+                    //  document.getElementById("telefono").value = telefono;
                 } else {
-                    {{!-- document.getElementById("name").value = ""; --}}
-                    {{!-- document.getElementById("correo").value = ""; --}}
+                    //  document.getElementById("name").value = "";
+                    //  document.getElementById("correo").value = "";
                 }
             } catch (error) {
                 console.error("Error verificando la cédula:", error);
@@ -132,4 +151,40 @@
         // Si necesitas realizar operaciones adicionales, hazlo aquí
         event.target.submit(); // Enviar el formulario manualmente
     });
+
+    // muestra la fecha actual
+
+    // window.onload = function () {
+    //    const fechaInput = document.getElementById("fecha");
+    //   const hoy = new Date();
+    //    fechaInput.value = hoy.toISOString().split('T')[0];
+    //   console.log(fechaInput.value);
+    // };
+
+
+    // para darle formato al numero de telefono cuando tiene 8 digitos
+    const telefonoInput = document.getElementById('telefono');
+
+    telefonoInput.addEventListener('input', function (e) {
+        let input = e.target.value;
+        // Eliminar todo lo que no sea dígito
+        input = input.replace(/\D/g, '');
+
+        // Formatear el número
+        // Aplicar el formato "1234-5678"
+        // Aplicar formato solo si tiene exactamente 8 dígitos
+
+
+        // Aplicar formato solo si tiene exactamente 8 dígitos
+        if (input.length === 8) {
+            input = `${input.slice(0, 4)}-${input.slice(4, 8)}`;
+        }
+
+        // Establecer el valor formateado
+        e.target.value = input;
+    });
+
+
+
+
 </script>
