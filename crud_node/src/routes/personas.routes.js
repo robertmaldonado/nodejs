@@ -48,13 +48,13 @@ router.post('/cadd', async (req, res) => {
 // Ruta para verificar la cédula
 // Ruta para verificar la cédula
 router.post('/check-cedula', async (req, res) => {
-    const { cedula } = req.body;
+    const { telefono } = req.body;
 
     try {
         // Ejecutar la consulta
         //const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
-        const query = "SELECT name,saldo,telefono, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE cedula = ?";
-        const [rows] = await pool.query(query, [cedula]);
+        const query = "SELECT name,saldo,telefono,cedula, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
+        const [rows] = await pool.query(query, [telefono]);
 
         console.log("recibienviado:", rows[0]);
         if (rows.length > 0) {

@@ -32,3 +32,15 @@ SELECT * FROM clientes WHERE cedula = '123456789';
 Servidor MySQL:
 
 MySQL recibe la consulta ya formateada y la ejecuta en su motor de base de datos.
+
+
+numero de telefono
+1. VARCHAR
+Cuándo usarlo:
+
+Si necesitas almacenar números de teléfono con caracteres adicionales como +, -, paréntesis, o espacios (por ejemplo, para formatos internacionales: +1 (123) 456-7890).
+Si no realizarás operaciones matemáticas o cálculos con los números de teléfono.
+Ventajas:
+
+Flexibilidad para almacenar formatos diversos.
+Permite incluir códigos de país, extensiones, y otros caracteres.

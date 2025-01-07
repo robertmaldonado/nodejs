@@ -7,11 +7,13 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Ejemplo Luis Gonzales">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Ejemplo Luis Gonzales" required>
+                <small class="text-danger" id="error-nombre">ddddgdd</small>
             </div>
             <div class="col-md-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Ingresa tu teléfono">
+                <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Ingresa tu teléfono"
+                    autofocus required>
             </div>
             <div class="col-md-2">
                 <label for="correo" class="form-label">Correo</label>
@@ -91,10 +93,10 @@
 
 <script>
     // Verificar si la cédula existe al desenfocar el campo
-    document.getElementById("cedula").addEventListener("blur", async () => {
-        const cedula = document.getElementById("cedula").value;
+    document.getElementById("telefono").addEventListener("blur", async () => {
+        const telefono = document.getElementById("telefono").value;
 
-        if (cedula) {
+        if (telefono) {
             try {
                 // Realizar la solicitud POST con fetch
                 const response = await fetch("/check-cedula", {
@@ -102,7 +104,7 @@
                     headers: {
                         "Content-Type": "application/json", // Indicamos que enviamos JSON
                     },
-                    body: JSON.stringify({ cedula }), // Convertir los datos a JSON
+                    body: JSON.stringify({ telefono }), // Convertir los datos a JSON
                 });
 
                 if (!response.ok) {
@@ -113,13 +115,15 @@
                 console.log(data);
 
                 if (data.exists) {
-                    const { name, correo, fecha, telefono, nota, saldo } = data.data;
+                    const { name, correo, fecha, telefono, nota, saldo, cedula } = data.data;
                     document.getElementById("name").value = name;
+                    // const nombre = document.getElementById("nombre").value.trim(); para eliminina espacios
                     document.getElementById("correo").value = correo;
                     document.getElementById("telefono").value = telefono;
                     document.getElementById("nota").value = nota;
                     document.getElementById("fecha").value = fecha;
                     document.getElementById("saldo").value = saldo;
+                    document.getElementById("cedula").value = cedula;
 
 
 
@@ -147,9 +151,9 @@
     // Manejar el envío del formulario
     document.getElementById("form").addEventListener("submit", async (event) => {
         event.preventDefault(); // Evitar envío predeterminadoo
-
+        alert("Por favor, completa todos los campos correctamente.");
         // Si necesitas realizar operaciones adicionales, hazlo aquí
-        event.target.submit(); // Enviar el formulario manualmente
+        // event.target.submit(); // Enviar el formulario manualmente
     });
 
     // muestra la fecha actual
