@@ -7,7 +7,8 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Ejemplo Luis Gonzales" required>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Ejemplo Luis Gonzales"
+                    required>
                 <small class="text-danger" id="error-nombre">ddddgdd</small>
             </div>
             <div class="col-md-3">
@@ -148,13 +149,12 @@
         }
     });
 
-    // Manejar el envío del formulario
-    document.getElementById("form").addEventListener("submit", async (event) => {
-        event.preventDefault(); // Evitar envío predeterminadoo
-        alert("Por favor, completa todos los campos correctamente.");
-        // Si necesitas realizar operaciones adicionales, hazlo aquí
-        // event.target.submit(); // Enviar el formulario manualmente
-    });
+
+// aqui etaba  
+ 
+
+
+
 
     // muestra la fecha actual
 
@@ -192,3 +192,21 @@
 
 
 </script>
+
+<!-- Importar el archivo JavaScript como módulo -->
+{{!--
+<script type="module" src="/js/procesar.js"></script> --}}
+
+
+
+
+<script type="module">
+    import { saludar, sumar, restar } from '/js/procesar.js';
+
+    saludar('Juan');
+    console.log(sumar(5, 3));
+    console.log(restar(10, 4));
+</script>
+
+
+<script type="module" src="/js/main.js"></script>

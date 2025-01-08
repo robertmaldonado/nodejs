@@ -44,3 +44,33 @@ Ventajas:
 
 Flexibilidad para almacenar formatos diversos.
 Permite incluir códigos de país, extensiones, y otros caracteres.
+
+  errorNombre.textContent = "El nombre es obligatorio.";  // Variables para los elementos de error
+    const errorNombre = document.getElementById("error-nombre");
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulos JavaScript</title>
+</head>
+<body>
+  <h1>Ejemplo de Módulos con JavaScript</h1>
+
+  <form id="form">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" required>
+    <button type="submit">Enviar</button>
+  </form>
+  <button id="clearForm">Limpiar Formulario</button>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
+
+document.getElementById("clearForm").addEventListener("click", () => {
+  clearFormFields("form");
+});
