@@ -7,6 +7,19 @@ import { clearFormFields, appName } from './utils.js';
 
 import { validateField } from './validations.js';
 
+import './telfVerification.js';
+
+// import { getCedula } from './telfVerification.js';
+
+
+// const cedula = getCedula();
+// if (cedula) {
+//     console.log(`Cédula obtenida: ${cedula}`);
+// } else {
+//     console.log("No hay una cédula disponiblewww.");
+// }
+
+
 // Usar las funciones importadas
 console.log(`Bienvenido a ${appName}`);
 
