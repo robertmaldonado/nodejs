@@ -22,8 +22,33 @@ client_actual.email = "nuevoCorreo@example.com";
 //--------------------------------------------------------------------
 
 
+client_actual.nombre = "roberto";
+
 router.get('/add', (req, res) => {
     res.render('personas/add');
+
+    //console.log(global);
+});
+
+router.get('/cliente', (req, res) => {
+    //res.render('personas/client');
+    res.render('personas/client', { cliente: client_actual });
+    console.log("dirigio a cliente"); // esto es para hacer pruebas
+    // res.redirect(301, 'https://www.electronicarj.com'); 
+    // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
+    //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
+
+    //console.log(global);
+});
+
+//aqi guardamos en variable en la ram datos cliente actual
+router.post('/cliente', (req, res) => {
+    //res.render('personas/client');
+    res.render('personas/client', { cliente: client_actual });
+    console.log("dirigio a cliente"); // esto es para hacer pruebas
+    // res.redirect(301, 'https://www.electronicarj.com'); 
+    // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
+    //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
 
     //console.log(global);
 });
@@ -48,6 +73,8 @@ router.post('/add', async (req, res) => {
     }
 });
 
+
+
 // para agregar  un cliente
 router.post('/cadd', async (req, res) => {
     //console.log("recibiendo al guardar:", req.body); // esto es para hacer pruebas
@@ -57,14 +84,23 @@ router.post('/cadd', async (req, res) => {
     try {
 
         const { name, telefono, correo, fecha, cedula, nota, saldo } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
+
+
         const newcliente = {
-            name, telefono, correo, fecha, cedula, nota, saldo  //  , telefono, correo, fecha, cedula, nota, gasto
+            name, telefono, correo: correo || null, fecha, cedula: cedula || null, nota, saldo  //  , telefono, correo, fecha, cedula, nota, gasto
         }
+
+        // if (!newcliente.correo) {
+        //     datosCliente.correo = null;
+        // }
+
+        // const datosCliente = { nombre, correo: correo || null }; // Si correo no existe, lo dejamos como NULL
+
         // await pool.query('INSERT INTO clientes SET ?', [newcliente]);
 
         const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
 
-        // Obtener el ID del cliente recién insertado
+        // Obtener el ID del cliente recién insertado 
         const insertedId = result.insertId;
         console.log("cliente nuevo su id es", insertedId); // esto es para hacer pruebas
 
