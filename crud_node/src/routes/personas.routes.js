@@ -22,6 +22,7 @@ client_actual.email = "nuevoCorreo@example.com";
 //--------------------------------------------------------------------
 
 
+//client_actual.nombre = null;
 client_actual.nombre = "roberto";
 
 router.get('/add', (req, res) => {
@@ -30,7 +31,7 @@ router.get('/add', (req, res) => {
     //console.log(global);
 });
 
-router.get('/cliente', (req, res) => {
+router.get('/client', (req, res) => {
     //res.render('personas/client');
     res.render('personas/client', { cliente: client_actual });
     console.log("dirigio a cliente"); // esto es para hacer pruebas
@@ -42,13 +43,18 @@ router.get('/cliente', (req, res) => {
 });
 
 //aqi guardamos en variable en la ram datos cliente actual
-router.post('/cliente', (req, res) => {
+router.post('/client', (req, res) => {
     //res.render('personas/client');
-    res.render('personas/client', { cliente: client_actual });
-    console.log("dirigio a cliente"); // esto es para hacer pruebas
+    //res.render('personas/client', { cliente: client_actual });
+    // console.log("dirigio a cliente"); // esto es para hacer pruebas
     // res.redirect(301, 'https://www.electronicarj.com'); 
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
+
+    const { nombre, lastname, age, estatus } = req.body;
+    client_actual.nombre = nombre;
+
+    res.render('personas/client', { cliente: client_actual });
 
     //console.log(global);
 });
