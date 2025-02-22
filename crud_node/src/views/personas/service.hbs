@@ -1,0 +1,319 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Formulario</h2>
+
+
+    <form action="/cadd" method="post" id="form">
+        <!-- Tarjeta para Datos del Cliente -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Datos del Cliente</h5>
+            </div>
+            <div class="card-body">
+                <!-- Usamos row para organizar los inputs -->
+                <div class="row">
+                    <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="nombreCliente" class="form-label">Telefono</label>
+                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="emailCliente" class="form-label">Nombre</label>
+                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="direccionCliente" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccionCliente"
+                                placeholder="Ingrese su dirección">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="nombreCliente" class="form-label">Cedula</label>
+                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="emailCliente" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="direccionCliente" class="form-label">Fecha</label>
+                            <input type="text" class="form-control" id="direccionCliente"
+                                placeholder="Ingrese su dirección">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="nombreCliente" class="form-label">Cedula</label>
+                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="emailCliente" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="mb-3">
+                            <label for="direccionCliente" class="form-label">Fecha</label>
+                            <input type="text" class="form-control" id="direccionCliente"
+                                placeholder="Ingrese su dirección">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="mb-3">
+                        <label for="nota" class="form-label">Falla del equipo </label>
+                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="mb-3">
+                            <label for="nota" class="form-label">Falla del equipo </label>
+                            <textarea class="form-control" name="nota" id="nota" rows="3"
+                                placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Tarjeta para Datos del Servicio Técnico -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Datos del Servicio Técnico</h5>
+            </div>
+            <div class="card-body">
+
+
+                <!-- Primera fila -->
+                <div class="row mb-3">
+
+                    <div class="col-md-3">
+                        <label for="nivel" class="form-label">Procedencia</label>
+                        <select class="form-select" id="equipo" aria-label="Default select example">
+                            <option>Selecciona un nivel</option>
+                            <option value="alto" selected>Servicio </option>
+                            <option value="medio">Venta</option>
+
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="nivel" class="form-label">equipo</label>
+                        <select class="form-select" id="equipo" aria-label="Default select example">
+                            <option selected>Selecciona un nivel</option>
+                            <option value="alto">tv</option>
+                            <option value="medio">freidora</option>
+                            <option value="bajo">sonido</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="nivel" class="form-label">Estatus</label>
+                        <select class="form-select" id="nivel" aria-label="Default select example">
+                            <option selected>Selecciona un nivel</option>
+                            <option value="alto" selected>revisar</option>
+                            <option value="medio">revisado</option>
+                            <option value="bajo">retirado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="fechain" class="form-label">Fecha de entrada</label>
+                        <input type="date" class="form-control" name="fechain" id="fechain">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="fechaout" class="form-label">Fecha de salida</label>
+                        <input type="date" class="form-control" name="fechaout" id="fechaout">
+                    </div>
+
+                </div>
+
+                <!-- Segunda fila -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="fecha2" class="form-label">Serial</label>
+                        <input type="date" class="form-control" id="fecha2">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="direccion" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu dirección">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="nivel" class="form-label">Marca</label>
+                        <select class="form-select" id="nivel" aria-label="Default select example">
+                            <option selected>Selecciona un nivel</option>
+                            <option value="alto">revisar</option>
+                            <option value="medio">revisado</option>
+                            <option value="bajo">retirado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Segunda fila -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="fecha2" class="form-label">Presupuesto</label>
+                        <input type="date" class="form-control" id="fecha2">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="direccion" class="form-label">Abono</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu dirección">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="nivel" class="form-label">Tiempo de reparacion</label>
+                        <select class="form-select" id="nivel" aria-label="Default select example">
+                            <option selected>Selecciona un nivel</option>
+                            <option value="alto">revisar</option>
+                            <option value="medio">revisado</option>
+                            <option value="bajo">retirado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="mb-3">
+                        <label for="nota" class="form-label">Falla del equipo </label>
+                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="mb-3">
+                        <label for="nota" class="form-label">Daño del equipo (Tecnico) </label>
+                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="mb-3">
+                        <label for="nota" class="form-label">Falla del equipo </label>
+                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                    </div>
+                </div>
+
+                <!--  fila  4 -->
+                <div class="row mb-3">
+
+                    <div class="col-md-4">
+
+
+                        <label for="saldo" class="form-label">saldo</label>
+                        <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
+                            placeholder=" gasto total del cliente" readonly>
+
+                        <input type="hidden" name="variable_oculta" id="variable_oculta" value="valor_predefinido">
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Botón de enviar -->
+        <div class="form-group mt-4 d-grid gap-2">
+            <button class="btn btn-success"> Crear</button>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+
+
+
+
+
+
+
+
+    // muestra la fecha actual
+
+    // window.onload = function () {
+    //    const fechaInput = document.getElementById("fecha");
+    //   const hoy = new Date();
+    //    fechaInput.value = hoy.toISOString().split('T')[0];
+    //   console.log(fechaInput.value);
+    // };
+
+
+    // para darle formato al numero de telefono cuando tiene 8 digitos
+    const telefonoInput = document.getElementById('telefono');
+
+    telefonoInput.addEventListener('input', function (e) {
+        let input = e.target.value;
+        // Eliminar todo lo que no sea dígito
+        input = input.replace(/\D/g, '');
+
+        // Formatear el número
+        // Aplicar el formato "1234-5678"
+        // Aplicar formato solo si tiene exactamente 8 dígitos
+
+
+        // Aplicar formato solo si tiene exactamente 8 dígitos
+        if (input.length === 8) {
+            input = `${input.slice(0, 4)}-${input.slice(4, 8)}`;
+        }
+
+        // Establecer el valor formateado
+        e.target.value = input;
+    });
+
+
+
+
+</script>
+
+<!-- Importar el archivo JavaScript como módulo -->
+{{!--
+<script type="module" src="/js/procesar.js"></script> --}}
+
+
+
+
+<script type="module">
+    import { saludar, sumar, restar } from '/js/procesar.js';
+
+    saludar('Juan');
+    console.log(sumar(5, 3));
+    console.log(restar(10, 4));
+</script>
+
+
+<script type="module" src="/js/main.js"></script>

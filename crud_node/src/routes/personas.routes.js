@@ -7,14 +7,25 @@ const router = Router();
 let var_id_cliente = null; // Variable para almacenar el id_cliente cliente actual, si es nul no existe el cliente
 let id_cliente_ult = null; // id del ultimo cliente buscado, actualizado o guardado
 
-
+//-------------------------------------------------
+// datos del ultimo cliente registrado
+const client_reg = {
+    id_cliente: null,
+    nombre: null,
+    telefono: null,
+    ubicacion: null,
+    cedula: null,
+    correo: null
+};
 //-------------------------------------------------
 // datos del ultimo cliente
 const client_actual = {
     id_cliente: null,
     nombre: null,
-    apellido: null,
-    email: null
+    telefono: null,
+    ubicacion: null,
+    cedula: null,
+    correo: null
 };
 
 client_actual.email = "nuevoCorreo@example.com";
@@ -31,6 +42,17 @@ router.get('/add', (req, res) => {
     //console.log(global);
 });
 
+
+router.get('/service', (req, res) => {
+    //res.render('personas/client');
+    res.render('personas/service', { cliente: client_actual });
+    console.log("dirigio a cliente"); // esto es para hacer pruebas
+    // res.redirect(301, 'https://www.electronicarj.com'); 
+    // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
+    //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
+
+    //console.log(global);
+});
 router.get('/client', (req, res) => {
     //res.render('personas/client');
     res.render('personas/client', { cliente: client_actual });
@@ -51,8 +73,12 @@ router.post('/client', (req, res) => {
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
 
-    const { nombre, lastname, age, estatus } = req.body;
+    const { nombre, telefono, ubicacion, cedula, correo } = req.body;
     client_actual.nombre = nombre;
+    client_actual.telefono = telefono;
+    client_actual.ubicacion = ubicacion;
+    client_actual.cedula = cedula;
+    client_actual.correo = correo;
 
     res.render('personas/client', { cliente: client_actual });
 

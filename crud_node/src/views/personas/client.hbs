@@ -40,23 +40,29 @@
             <!-- Teléfono -->
             <div class="mb-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" placeholder="" required>
+                <input type="tel" class="form-control" id="telefono" name="telefono" value="{{cliente.telefono}}"
+                    placeholder="" required>
                 <div id="emailHelp2" class="form-text">WhatsApp Ej: 1234-5678</div>
             </div>
-            <!-- Fecha de Retiro -->
+            <!-- ubicacion -->
             <div class="mb-3">
                 <label for="ubicacion" class="form-label">Ubicacion</label>
-                <input type="text" class="form-control" id="ubicacion" placeholder="" required>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion" value="{{cliente.ubicacion}}"
+                    placeholder="" required>
                 <div id="emailHelp" class="form-text">Ingrese su Ubicacion</div>
             </div>
+            <!-- cedula -->
             <div class="mb-3">
                 <label for="cedula" class="form-label">Cedula</label>
-                <input type="text" class="form-control" id="cedula" placeholder="opcional" required>
+                <input type="text" class="form-control" id="cedula" name="cedula" value="{{cliente.cedula}}"
+                    placeholder="opcional" required>
                 <!-- <div id="cedulaHelp" class="form-text">Ingrese su Cedula</div> -->
             </div>
+            <!-- correo -->
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo</label>
-                <input type="email" class="form-control" id="correo" placeholder="">
+                <input type="email" class="form-control" id="correo" name="correo" value="{{cliente.correo}}"
+                    placeholder="">
                 <div id="correoHelp" class="form-text">Ingrese su Correo Electronico</div>
             </div>
             <!-- Botón Enviar -->
