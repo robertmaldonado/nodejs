@@ -11,8 +11,11 @@ let telefono1 = null; // Variable para almacenar la cédula
 export const getCedula = () => telefono1;
 
 // Verifica si existe el telefono al desenfocar el campo se activa este evento
-document.getElementById("telefono").addEventListener("blur", async () => {
-    const telefono = document.getElementById("telefono").value;
+//document.getElementById("telefono").addEventListener("blur", async () => {
+
+document.getElementById('btnBuscar').addEventListener('click', async () => {
+
+    const telefono = document.getElementById("telefonob").value;
 
     if (telefono) {
         try {
@@ -33,7 +36,7 @@ document.getElementById("telefono").addEventListener("blur", async () => {
             console.log(data);
 
             if (data.exists) {
-                const { name, correo, fecha, telefono, nota, saldo, cedula, id_cliente } = data.data;
+                const { name, correo, fecha, telefono, nota, saldo, cedula,address, id_cliente } = data.data;
                 document.getElementById("name").value = name;
                 // const nombre = document.getElementById("nombre").value.trim(); para eliminina espacios
                 document.getElementById("correo").value = correo;
@@ -43,7 +46,7 @@ document.getElementById("telefono").addEventListener("blur", async () => {
                 document.getElementById("saldo").value = saldo;
                 document.getElementById("cedula").value = cedula;
                 document.getElementById("variable_oculta").value = cedula;//para enviarla post con esto puedo saber si el cliente existe para saber si es actualizar o guardar nuevo cliente
-
+                document.getElementById("ubicacion").value = address;
 
                 // Actualizar los valores exportables
                 // correo1 = correo;
@@ -71,8 +74,8 @@ document.getElementById("telefono").addEventListener("blur", async () => {
         }
     }
 
-
 });
+//});
 
 // exportar una constante
 //export const MODULES_BECAME_STANDARD_YEAR = 2015;

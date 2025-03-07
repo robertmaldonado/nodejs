@@ -15,20 +15,22 @@
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="nombreCliente" class="form-label">Telefono</label>
-                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                            <input type="text" class="form-control" id="nombreCliente" value="{{cliente.telefono}}"
+                                placeholder="Ingrese su nombre" disabled>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="emailCliente" class="form-label">Nombre</label>
-                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                            <input type="email" class="form-control" id="emailCliente" value="{{cliente.nombre}} "
+                                placeholder="Ingrese su correo" disabled>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="direccionCliente" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccionCliente"
-                                placeholder="Ingrese su dirección">
+                            <label for="direccionCliente" class="form-label">ubicacion</label>
+                            <input type="text" class="form-control" id="direccionCliente" value="{{cliente.ubicacion}} "
+                                placeholder="Ingrese su dirección" disabled>
                         </div>
                     </div>
                 </div>
@@ -37,20 +39,22 @@
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="nombreCliente" class="form-label">Cedula</label>
-                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                            <input type="text" class="form-control" id="nombreCliente" value="{{cliente.cedula}} "
+                                placeholder="Ingrese su nombre">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="emailCliente" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                            <input type="email" class="form-control" id="emailCliente" value="{{cliente.correo}} "
+                                placeholder="Ingrese su correo">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="direccionCliente" class="form-label">Fecha</label>
-                            <input type="text" class="form-control" id="direccionCliente"
-                                placeholder="Ingrese su dirección">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" value="{{cliente.fecha}}"
+                                placeholder="Ingrese su dirección" disabled>
                         </div>
                     </div>
                 </div>
@@ -92,6 +96,22 @@
                     </div>
 
                 </div>
+                <div class="row mb-3">
+
+                    <div class="col-md-4">
+
+
+                        <label for="saldo" class="form-label">saldo</label>
+                        <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
+                            placeholder=" gasto total del cliente" readonly>
+
+                        <input type="hidden" name="variable_oculta" id="variable_oculta" value="valor_predefinido">
+
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
@@ -184,6 +204,32 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label for="nivel" class="form-label">Pulgadas</label>
+                        <select class="form-select" id="nivel" aria-label="Default select example">
+                            <option selected>Selecciona Pulgadas</option>
+                            <option value="alto">24</option>
+                            <option value="medio">28</option>
+                            <option value="bajo">32</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Segunda fila -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="fecha2" class="form-label">NC</label>
+                        <input type="date" class="form-control" id="fecha2">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nivel" class="form-label">Metodo de pago</label>
+                        <select class="form-select" id="nivel" aria-label="Default select example">
+                            <option selected>Selecciona un nivel</option>
+                            <option value="alto">revisar</option>
+                            <option value="medio">revisado</option>
+                            <option value="bajo">retirado</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
                         <label for="nivel" class="form-label">Tiempo de reparacion</label>
                         <select class="form-select" id="nivel" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
@@ -212,7 +258,7 @@
 
                 <div class="row mb-3">
                     <div class="mb-3">
-                        <label for="nota" class="form-label">Falla del equipo </label>
+                        <label for="nota" class="form-label">dESCRICION VENTA </label>
                         <textarea class="form-control" name="nota" id="nota" rows="3"
                             placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
                     </div>
@@ -224,7 +270,7 @@
                     <div class="col-md-4">
 
 
-                        <label for="saldo" class="form-label">saldo</label>
+                        <label for="saldo" class="form-label">NC</label>
                         <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
                             placeholder=" gasto total del cliente" readonly>
 
@@ -316,4 +362,5 @@
 </script>
 
 
-<script type="module" src="/js/main.js"></script>
+{{!--
+<script type="module" src="/js/main.js"></script> --}}

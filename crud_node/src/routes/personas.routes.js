@@ -8,14 +8,15 @@ let var_id_cliente = null; // Variable para almacenar el id_cliente cliente actu
 let id_cliente_ult = null; // id del ultimo cliente buscado, actualizado o guardado
 
 //-------------------------------------------------
-// datos del ultimo cliente registrado
+// datos del ultimo cliente registrado o  buscado
 const client_reg = {
     id_cliente: null,
     nombre: null,
     telefono: null,
     ubicacion: null,
     cedula: null,
-    correo: null
+    correo: null,
+    fecha: null
 };
 //-------------------------------------------------
 // datos del ultimo cliente
@@ -25,7 +26,8 @@ const client_actual = {
     telefono: null,
     ubicacion: null,
     cedula: null,
-    correo: null
+    correo: null,
+    fecha: null
 };
 
 client_actual.email = "nuevoCorreo@example.com";
@@ -45,7 +47,7 @@ router.get('/add', (req, res) => {
 
 router.get('/service', (req, res) => {
     //res.render('personas/client');
-    res.render('personas/service', { cliente: client_actual });
+    res.render('personas/service', { cliente: client_reg });
     console.log("dirigio a cliente"); // esto es para hacer pruebas
     // res.redirect(301, 'https://www.electronicarj.com'); 
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
@@ -73,12 +75,14 @@ router.post('/client', (req, res) => {
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
 
-    const { nombre, telefono, ubicacion, cedula, correo } = req.body;
+    const { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
     client_actual.nombre = nombre;
     client_actual.telefono = telefono;
     client_actual.ubicacion = ubicacion;
     client_actual.cedula = cedula;
     client_actual.correo = correo;
+    client_actual.fecha = fechaactual;
+
 
     res.render('personas/client', { cliente: client_actual });
 
@@ -88,23 +92,10 @@ router.post('/client', (req, res) => {
 
 // comentarios
 router.get('/cadd', (req, res) => {
-    res.render('personas/cadd');
+    //res.render('personas/client', { cliente: client_actual });
+    console.log("dirigio a cliente jhfjf"); // esto es para hacer pruebas
+    res.render('personas/cadd', { cliente: client_actual });
 });
-
-router.post('/add', async (req, res) => {
-    try {
-        const { name, lastname, age, estatus } = req.body;
-        const newPersona = {
-            name, lastname, age, estatus
-        }
-        await pool.query('INSERT INTO personas SET ?', [newPersona]);
-        res.redirect('/list');
-    }
-    catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
 
 
 // para agregar  un cliente
@@ -115,11 +106,11 @@ router.post('/cadd', async (req, res) => {
     console.log("id guardado en servidor node", var_id_cliente); // esto es para hacer pruebas
     try {
 
-        const { name, telefono, correo, fecha, cedula, nota, saldo } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
+        const { name, telefono, ubicacion, correo, fecha, cedula, nota, saldo } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
 
 
         const newcliente = {
-            name, telefono, correo: correo || null, fecha, cedula: cedula || null, nota, saldo  //  , telefono, correo, fecha, cedula, nota, gasto
+            name, telefono, correo: correo || null, fecha, cedula: cedula || null, nota, saldo, address: ubicacion || null  //  , telefono, correo, fecha, cedula, nota, gasto
         }
 
         // if (!newcliente.correo) {
@@ -143,6 +134,23 @@ router.post('/cadd', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+router.post('/add', async (req, res) => {
+    try {
+        const { name, lastname, age, estatus } = req.body;
+        const newPersona = {
+            name, lastname, age, estatus
+        }
+        await pool.query('INSERT INTO personas SET ?', [newPersona]);
+        res.redirect('/list');
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 
 //guardarCliente('Juan Pérez', '1234');
 //primero verifica si existe el numero de telefono en caso de existir actualiza y si no existe lo guarda, esto evita duplicar el mismo telefono cliente
@@ -170,7 +178,7 @@ router.post('/check-cedula', async (req, res) => {
         // Ejecutar la consulta
         //const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
         // const query = "SELECT name,saldo,telefono,cedula, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
-        const query = "SELECT name,saldo,telefono,cedula,id_cliente, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
+        const query = "SELECT name,saldo,telefono,address,correo,cedula,id_cliente, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
         const [rows] = await pool.query(query, [telefono]);
 
         console.log("recibienviado:", rows[0]);
@@ -183,6 +191,17 @@ router.post('/check-cedula', async (req, res) => {
             const cedula = cliente.id_cliente;
             const telefono = cliente.telefono;
             const name = cliente.name;
+            const address = cliente.address;
+
+            client_reg.id_cliente = cliente.id_cliente;
+            client_reg.nombre = cliente.name;
+            client_reg.telefono = telefono;
+            client_reg.ubicacion = address;
+
+            client_reg.fecha = cliente.fecha;// fecha
+            client_reg.cedula = cliente.cedula; //cedula
+            client_reg.correo = cliente.correo;  // correo
+            console.log("clientefecha:", client_reg.fecha);
             //const name = cliente.name;
             // var_id_cliente = id_cliente; // Asignación a la nueva variable id del cliente actual en caso que exista
             //id_cliente_ult = id_cliente; // id dl ultimo cliente buscado encontrado

@@ -1,31 +1,44 @@
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Formulario</h2>
+    <h2 class="text-center mb-4">Formulario agregar cliente</h2>
 
+
+    <!-- Fila con input y botón -->
+    <div class="row align-items-center g-2">
+        <div class="col-auto">
+            <input type="text" id="telefonob" class="form-control" placeholder="Ingrese su teléfono">
+        </div>
+        <div class="col-auto">
+            <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
 
     <form action="/cadd" method="post" id="form">
         <!-- Primera fila -->
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Ejemplo Luis Gonzales">
+                <input type="text" class="form-control" name="name" id="name" value="{{cliente.nombre}}"
+                    placeholder="Ejemplo Luis Gonzales">
                 <small class="text-danger" id="error-nombre">ddddgdd</small>
             </div>
             <div class="col-md-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Ingresa tu teléfono"
-                    autofocus>
+                <input type="text" class="form-control" name="telefono" id="telefono" value="{{cliente.telefono}}"
+                    placeholder="Ingresa tu teléfono" autofocus>
             </div>
             <div class="col-md-2">
                 <label for="correo" class="form-label">Correo</label>
-                <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingresa tu correo">
+                <input type="email" class="form-control" name="correo" id="correo" value="{{cliente.correo}}"
+                    placeholder="Ingresa tu correo">
             </div>
             <div class="col-md-2">
                 <label for="fecha" class="form-label">Fecha</label>
-                <input type="date" class="form-control" name="fecha" id="fecha">
+                <input type="date" class="form-control" name="fecha" id="fecha" value="{{cliente.fecha}}">
             </div>
             <div class="col-md-2">
                 <label for="cedula" class="form-label">Ced/pass</label>
-                <input type="text" class="form-control" name="cedula" id="cedula" placeholder="cedula o pasaporte">
+                <input type="text" class="form-control" name="cedula" id="cedula" value="{{cliente.cedula}}"
+                    placeholder="cedula o pasaporte">
             </div>
 
         </div>
@@ -33,12 +46,13 @@
         <!-- Segunda fila -->
         <div class="row mb-3">
             <div class="col-md-4">
-                <label for="fecha2" class="form-label">Fecha</label>
+                <label for="fecha2" class="form-label">Fechano</label>
                 <input type="date" class="form-control" id="fecha2">
             </div>
             <div class="col-md-4">
-                <label for="direccion" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu dirección">
+                <label for="ubicacion" class="form-label">Ubicacion</label>
+                <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="{{cliente.ubicacion}}"
+                    placeholder="Ingresa tu dirección">
             </div>
 
             <div class="col-md-4">
