@@ -55,6 +55,49 @@ router.get('/service', (req, res) => {
 
     //console.log(global);
 });
+
+router.post('/service', async (req, res) => {
+    //console.log("recibiendo al guardar:", req.body); // esto es para hacer pruebas
+    // console.log(req.body);
+    // console.log(var_id_cliente);
+    console.log("id guardado en servidor node", var_id_cliente); // esto es para hacer pruebas
+    try {
+
+        const { id_cliente, equipo, estatus, falla, f_in, f_sal, rep_desc, costo, fer, met_pg, presup, proced, serial, model, marca, abono, pulg, dano, venta_dsc } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
+
+
+        const newcservice = {
+            id_cliente, equipo: equipo || null, correo: correo || null, fecha, cedula: cedula || null, nota, saldo, address: ubicacion || null  //  , telefono, correo, fecha, cedula, nota, gasto
+        }
+
+        // if (!newcliente.correo) {
+        //     datosCliente.correo = null;
+        // }
+
+        // const datosCliente = { nombre, correo: correo || null }; // Si correo no existe, lo dejamos como NULL
+
+        // await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+
+        const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+
+        // Obtener el ID del cliente recién insertado 
+        const insertedId = result.insertId;
+        console.log("cliente nuevo su id es", insertedId); // esto es para hacer pruebas
+
+        res.redirect('/');
+        //var_id_cliente = id_cliente; // Asignación a la nueva variable id del cliente actual en caso que exista error hay que sacar el id actual del cliente y guardarlo en la variable
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
+
+
+
 router.get('/client', (req, res) => {
     //res.render('personas/client');
     res.render('personas/client', { cliente: client_actual });
@@ -76,8 +119,14 @@ router.post('/client', (req, res) => {
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
 
     const { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
-    client_actual.nombre = nombre;
-    client_actual.telefono = telefono;
+
+    //formatPhoneNumber(telefono);
+    client_actual.telefono = formatPhoneNumber(telefono);
+    // client_actual.nombre = nombre;
+
+    client_actual.nombre = nombre.trim().replace(/\s+/g, ' ');//quita espacio al inicio y final y mas de un espacio intermedios
+
+    //client_actual.telefono = telefono;
     client_actual.ubicacion = ubicacion;
     client_actual.cedula = cedula;
     client_actual.correo = correo;
@@ -283,7 +332,20 @@ async function buscarIdPorCedula(cedula) {
 //     return var_id_cliente;
 // }
 
+function formatPhoneNumber(phone) {
+    // Elimina cualquier carácter que no sea dígito
+    const digits = phone.replace(/\D/g, '');
 
+    // Verifica que tenga 8 dígitos, de lo contrario devuelve el original o lanza un error
+    if (digits.length !== 8) {
+        // Puedes ajustar este comportamiento según tus necesidades
+        //  const textoSinEspacios = phone.replace(/ /g, '');
+        return phone.replace(/ /g, '');// elimina solo los espacios
+    }
+
+    // Inserta un guion después de los primeros 4 dígitos
+    return digits.replace(/(\d{4})(\d{4})/, '$1-$2');
+}
 
 
 

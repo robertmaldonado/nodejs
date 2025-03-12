@@ -74,3 +74,13 @@ Permite incluir códigos de país, extensiones, y otros caracteres.
 document.getElementById("clearForm").addEventListener("click", () => {
   clearFormFields("form");
 });
+
+
+Para corregir un string eliminando los espacios al inicio, final y colapsando los espacios múltiples en uno solo, puedes usar los métodos trim() y replace() de JavaScript. Aquí tienes un ejemplo en Node.js:
+
+javascript
+Copiar
+Editar
+const textoIncorrecto = "  hola   mundo  ";
+const textoCorregido = textoIncorrecto.trim().replace(/\s+/g, ' ');
+console.log(textoCorregido); // "hola mundo"
