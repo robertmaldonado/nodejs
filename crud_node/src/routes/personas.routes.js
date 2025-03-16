@@ -124,12 +124,12 @@ router.post('/client', (req, res) => {
     client_actual.telefono = formatPhoneNumber(telefono);
     // client_actual.nombre = nombre;
 
-    client_actual.nombre = nombre.trim().replace(/\s+/g, ' ');//quita espacio al inicio y final y mas de un espacio intermedios
+    client_actual.nombre = nombre.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
 
     //client_actual.telefono = telefono;
-    client_actual.ubicacion = ubicacion;
-    client_actual.cedula = cedula;
-    client_actual.correo = correo;
+    client_actual.ubicacion = ubicacion.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    client_actual.cedula = cedula.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    client_actual.correo = correo.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
     client_actual.fecha = fechaactual;
 
 
