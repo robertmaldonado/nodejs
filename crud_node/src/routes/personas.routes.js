@@ -147,8 +147,112 @@ router.get('/cadd', (req, res) => {
 });
 
 
+
 // para agregar  un cliente
 router.post('/cadd', async (req, res) => {
+    //console.log("recibiendo al guardar:", req.body); // esto es para hacer pruebas
+    // console.log(req.body);
+    // console.log(var_id_cliente);
+    console.log("id guardado en servidor node", var_id_cliente); // esto es para hacer pruebas
+
+
+    let { name, telefono, address, correo, fecha, cedula, nota, saldo } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
+
+
+
+
+
+
+    correo = correo || null;
+    cedula = cedula || null;
+    //ubicacion = ubicacion || null;
+    address = address || null;
+
+    const clienteData1 = [name, telefono, address, correo, cedula];
+
+
+    /*  const newcliente = {
+         name, telefono, correo: correo || null, fecha, cedula: cedula || nul, nota, saldo, address: ubicacion || null  //  , telefono, correo, fecha, cedula, nota, gasto
+     }; */
+
+    // if (!newcliente.correo) {
+    //     datosCliente.correo = null;
+    // }
+
+    // const datosCliente = { nombre, correo: correo || null }; // Si correo no existe, lo dejamos como NULL
+
+    //await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+
+
+    // si algun dato es duplicado osea ya existe  actualiza todo telefono, name,ubicacion,cedula
+    const query = `
+        INSERT INTO clientes (telefono,name,address,correo,cedula)
+        VALUES (?,?,?,?,?)
+        ON DUPLICATE KEY UPDATE
+        telefono = VALUES(telefono),
+        name = VALUES(name),
+        address = VALUES(address),
+        correo = VALUES(correo),
+        cedula = VALUES(cedula)`;
+
+    //const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+
+    //  const { name, telefono, ubicacion, correo, fecha, cedula, nota, saldo } = req.body;
+
+
+    /*  // Consulta SQL para insertar un nuevo cliente
+     const query1 = `
+         INSERT INTO clientes (name, telefono, ubicacion, correo, fecha, cedula, nota, saldo)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+       `;
+  */
+    // Ejecución de la consulta con parámetros
+
+
+
+    try {
+        const [result] = await pool.execute(query, clienteData1);
+        if (result.affectedRows === 1) {
+            console.log('Registro insertado.');
+        } else if (result.affectedRows === 2) {
+            console.log('Registro actualizado.');
+        }
+        res.redirect('/');
+    } catch (err) {
+        console.error('Error en la operación:', err.message);
+        res.status(500).json({ message: err.message });
+    }
+
+
+
+
+
+
+
+    /* 
+    
+        try {
+            const [result] = await pool.execute(query, clienteData1);
+    
+            // Obtener el ID del cliente recién insertado
+            const insertedId = result.insertId;
+            console.log("Cliente nuevo, su ID es:", insertedId);
+    
+            res.redirect('/');
+        } catch (err) {
+            console.error('Error al insertar el cliente:', err.message);
+            res.status(500).json({ message: 'Error al insertar el cliente.' });
+        }
+     */
+
+
+});
+
+
+
+
+// para agregar  un cliente
+router.post('/caddxz', async (req, res) => {
     //console.log("recibiendo al guardar:", req.body); // esto es para hacer pruebas
     // console.log(req.body);
     // console.log(var_id_cliente);
@@ -183,6 +287,8 @@ router.post('/cadd', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
 
 
 router.post('/add', async (req, res) => {
