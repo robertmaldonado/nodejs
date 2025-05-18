@@ -89,6 +89,27 @@ router.post('/service', async (req, res) => {
     }
     catch (err) {
         res.status(500).json({ message: err.message });
+
+
+        /*  app.post('/usuario', async (req, res) => {
+             const { nombre, telefono, direccion } = req.body;
+           
+             if (!nombre || !telefono || !direccion) {
+               return res.status(400).json({ success: false, message: 'Faltan campos requeridos' });
+             }
+           
+             const telefonoRegex = /^\d{4}-\d{4}$/;
+             if (!telefonoRegex.test(telefono)) {
+               return res.status(400).json({ success: false, message: 'Formato de teléfono inválido. Use xxxx-xxxx' });
+             }
+           
+             const resultado = await guardarOActualizarUsuario(nombre, telefono, direccion);
+             res.json(resultado);
+           }); */
+
+
+
+
     }
 });
 
@@ -109,7 +130,7 @@ router.get('/client', (req, res) => {
     //console.log(global);
 });
 
-//aqi guardamos en variable en la ram datos cliente actual
+//aqi guardamos en variable en la ram datos cliente actual----------------------------------------------
 router.post('/client', (req, res) => {
     //res.render('personas/client');
     //res.render('personas/client', { cliente: client_actual });
@@ -168,7 +189,7 @@ router.post('/cadd', async (req, res) => {
     //ubicacion = ubicacion || null;
     address = address || null;
 
-    const clienteData1 = [name, telefono, address, correo, cedula];
+    const clienteData1 = [telefono, name, address, correo, cedula];
 
 
     /*  const newcliente = {
@@ -185,15 +206,9 @@ router.post('/cadd', async (req, res) => {
 
 
     // si algun dato es duplicado osea ya existe  actualiza todo telefono, name,ubicacion,cedula
-    const query = `
-        INSERT INTO clientes (telefono,name,address,correo,cedula)
-        VALUES (?,?,?,?,?)
-        ON DUPLICATE KEY UPDATE
-        telefono = VALUES(telefono),
-        name = VALUES(name),
-        address = VALUES(address),
-        correo = VALUES(correo),
-        cedula = VALUES(cedula)`;
+    const query = `INSERT INTO clientes (telefono,name,address,correo,cedula) VALUES (?,?,?,?,?)
+                    ON DUPLICATE KEY UPDATE telefono = VALUES(telefono),name = VALUES(name),
+                    address = VALUES(address),correo = VALUES(correo),cedula = VALUES(cedula)`;
 
     //const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
 
@@ -458,3 +473,46 @@ function formatPhoneNumber(phone) {
 
 
 export default router;
+
+
+
+
+
+
+
+function validarYCorregirTelefono(numero) {
+    // Expresión regular para verificar si el número tiene el formato correcto (XXXX-XXXX)
+
+   // numero = numero.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+
+    numero = numero.replace(/\s+/g, '');
+
+    const regexFormatoCorrecto = /^\d{4}-\d{4}$/;
+
+    // Si ya tiene el formato correcto, lo devolvemos tal cual
+    if (regexFormatoCorrecto.test(numero)) {
+        return numero;
+    }
+
+    // Expresión regular para detectar si el número tiene 8 dígitos seguidos
+    const regexSoloNumeros = /^\d{8}$/;
+
+    if (regexSoloNumeros.test(numero)) {
+        // Insertamos el guion en la posición correcta
+        return numero.slice(0, 4) + "-" + numero.slice(4);
+    }
+
+    // Si no cumple ninguna de las condiciones, devolver null o mensaje de error
+    return null; // O puedes devolver un mensaje indicando que el formato es inválido
+
+    /* 
+    // Ejemplo de uso:
+    console.log(validarYCorregirTelefono("1234-5678")); // Output: 1234-5678 (ya está correcto)
+    console.log(validarYCorregirTelefono("12345678"));  // Output: 1234-5678 (corrige el formato)
+    console.log(validarYCorregirTelefono("123-56789")); // Output: null (no válido) */
+
+
+
+}
+
+
