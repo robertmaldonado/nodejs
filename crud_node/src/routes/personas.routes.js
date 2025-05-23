@@ -139,7 +139,15 @@ router.post('/client', async (req, res) => {
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
 
-    const { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
+    let { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
+
+    // en caso que no este definido ponerlo como null
+    nombre = nombre || null;
+    telefono = telefono || null;
+    ubicacion = ubicacion || null;
+    cedula = cedula || null;
+    correo = correo || null;
+    fechaactual = fechaactual || null;
 
     //formatPhoneNumber(telefono);
     // client_actual.telefono = formatPhoneNumber(telefono);
