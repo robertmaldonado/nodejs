@@ -84,3 +84,20 @@ Editar
 const textoIncorrecto = "  hola   mundo  ";
 const textoCorregido = textoIncorrecto.trim().replace(/\s+/g, ' ');
 console.log(textoCorregido); // "hola mundo"
+
+
+
+-----------------------------------------------------------------------------------
+
+SELECT MONTH(fecha_abono) AS mes, SUM(abono) AS total_ingresos
+FROM ingresos
+GROUP BY mes
+
+UNION
+
+SELECT MONTH(fecha_pago_final) AS mes, SUM(pago_final) AS total_ingresos
+FROM ingresos
+GROUP BY mes
+
+ORDER BY mes;
+

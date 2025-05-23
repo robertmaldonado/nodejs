@@ -131,7 +131,7 @@ router.get('/client', (req, res) => {
 });
 
 //aqi guardamos en variable en la ram datos cliente actual----------------------------------------------
-router.post('/client', (req, res) => {
+router.post('/client', async (req, res) => {
     //res.render('personas/client');
     //res.render('personas/client', { cliente: client_actual });
     // console.log("dirigio a cliente"); // esto es para hacer pruebas
@@ -142,9 +142,19 @@ router.post('/client', (req, res) => {
     const { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
 
     //formatPhoneNumber(telefono);
-    client_actual.telefono = formatPhoneNumber(telefono);
-    // client_actual.nombre = nombre;
+    // client_actual.telefono = formatPhoneNumber(telefono);
 
+    // client_actual.telefono = validarYCorregirTelefono(telefono);
+    let valorxz = validarYCorregirTelefono(telefono);
+
+    if (!valorxz) {
+        res.status(500).json({ error: "El teléfono está incorrecto. Debe tener el formato XXXX-XXXX." });
+    }
+
+
+
+    // client_actual.nombre = nombre;
+    client_actual.telefono = valorxz;
     client_actual.nombre = nombre.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
 
     //client_actual.telefono = telefono;
@@ -152,6 +162,84 @@ router.post('/client', (req, res) => {
     client_actual.cedula = cedula.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
     client_actual.correo = correo.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
     client_actual.fecha = fechaactual;
+
+
+    // si algun dato es duplicado osea ya existe  actualiza todo telefono, name,ubicacion,cedula
+
+    console.log(`Usuario : ${client_actual.telefono}`);
+    console.log(`Usuario : ${client_actual.nombre}`);
+    console.log(`Usuario : ${client_actual.ubicacion}`);
+    console.log(`Usuario : ${client_actual.cedula}`);
+    console.log(`Usuario : ${client_actual.correo}`);
+    console.log(`Usuario : ${client_actual.fecha}`);
+    console.log(`Usuariotelefono  : ${valorxz}`);
+
+
+    // Ejecución de la consulta con parámetros
+
+
+
+    try {
+
+        const queryBuscar = `SELECT id_cliente FROM clientes WHERE telefono = ?`;
+        const [rows1] = await pool.execute(queryBuscar, [valorxz]);
+
+        // Asegurarse de inicializar `rows` correctamente
+        //const [rows] = await pool.execute(query, [telefono]);
+        //console.log(`Usuariotelefonodsfdfs : ${rows1}`);
+        console.log("Contenido de rows1:", rows1);
+
+        // Comprobar si se encontró algún usuario
+        if (rows1.length > 0) {
+            console.log(`Usuario encontrado con ID: ${rows1[0].id_cliente}`);
+
+            // 2. Si existe, actualizar
+            const usuarioId = rows1[0].id_cliente;
+
+            const query = `UPDATE clientes SET name = ?, address = ?, correo = ?, fecha = ?, cedula = ? WHERE id_cliente = ?`;
+            const [rows] = await pool.execute(query, [nombre, ubicacion, correo, fechaactual, cedula, usuarioId]);
+
+            // console.log('No se encontró usuario con ese nombre.');
+            console.log('usuario actualizado');
+
+            //return true; // Existe usuario con ese nombre
+        } else {
+            console.log('No se encontró usuario con ese nombre.');
+
+
+            // Usuario no encontrado, insertarlo
+            console.log('No se encontró usuario con ese teléfono. Se agregará.');
+
+            const queryInsertar = `INSERT INTO clientes (name, telefono, correo, fecha, cedula, address) VALUES (?, ?, ?, ?, ?, ?)`;
+            const [result] = await pool.execute(queryInsertar, [client_actual.nombre, telefono, correo, fechaactual, cedula, client_actual.ubicacion]);
+
+            if (result.affectedRows > 0) {
+                console.log("Usuario agregado correctamente con ID:", result.insertId);
+                // res.json({ mensaje: "Usuario agregado correctamente.", id: result.insertId });
+            } else {
+                console.log("Error al insertar usuario.");
+                res.status(500).json({ error: "No se pudo agregar el usuario." });
+            }
+
+            // res.json({ mensaje: "Usuario agregado correctamente." });
+
+
+
+
+            //return false; // No existe
+        }
+    } catch (err) {
+        console.error('Error en la operación:', err.message);
+        // console.error('Error al ejecutar la consulta:', error);
+        res.status(500).json({ message: err.message });
+    }
+
+
+
+
+
+
+
 
 
     res.render('personas/client', { cliente: client_actual });
@@ -483,7 +571,7 @@ export default router;
 function validarYCorregirTelefono(numero) {
     // Expresión regular para verificar si el número tiene el formato correcto (XXXX-XXXX)
 
-   // numero = numero.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    // numero = numero.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
 
     numero = numero.replace(/\s+/g, '');
 
