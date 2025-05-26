@@ -163,12 +163,12 @@ router.post('/client', async (req, res) => {
 
     // client_actual.nombre = nombre;
     client_actual.telefono = valorxz;
-    client_actual.nombre = nombre.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    nombre = client_actual.nombre = nombre.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
 
     //client_actual.telefono = telefono;
-    client_actual.ubicacion = ubicacion.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
-    client_actual.cedula = cedula.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
-    client_actual.correo = correo.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    ubicacion = client_actual.ubicacion = ubicacion.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
+    cedula = client_actual.cedula = cedula.trim().replace(/\s+/g, ''); //quita cualquier  espacio 
+    correo = client_actual.correo = correo.trim().replace(/\s+/g, ''); //quita cualquier  espacio 
     client_actual.fecha = fechaactual;
 
 
@@ -204,8 +204,11 @@ router.post('/client', async (req, res) => {
             // 2. Si existe, actualizar
             const usuarioId = rows1[0].id_cliente;
 
+
             const query = `UPDATE clientes SET name = ?, address = ?, correo = ?, fecha = ?, cedula = ? WHERE id_cliente = ?`;
-            const [rows] = await pool.execute(query, [nombre, ubicacion, correo, fechaactual, cedula, usuarioId]);
+            const params = [nombre, ubicacion, correo, fechaactual, cedula, usuarioId];
+
+            const [rows] = await pool.execute(query, params);
 
             // console.log('No se encontró usuario con ese nombre.');
             console.log('usuario actualizado');
@@ -219,7 +222,7 @@ router.post('/client', async (req, res) => {
             console.log('No se encontró usuario con ese teléfono. Se agregará.');
 
             const queryInsertar = `INSERT INTO clientes (name, telefono, correo, fecha, cedula, address) VALUES (?, ?, ?, ?, ?, ?)`;
-            const [result] = await pool.execute(queryInsertar, [client_actual.nombre, telefono, correo, fechaactual, cedula, client_actual.ubicacion]);
+            const [result] = await pool.execute(queryInsertar, [nombre, telefono, correo, fechaactual, cedula, ubicacion]);
 
             if (result.affectedRows > 0) {
                 console.log("Usuario agregado correctamente con ID:", result.insertId);
@@ -245,12 +248,39 @@ router.post('/client', async (req, res) => {
 
 
 
+    //-----------------
+    const termino = " SI, ESTOY DE ACUERDO E INFORMADO  Tengo 15 DIAS desde la notificación para retirar mi equipo; de lo contrario, será RECICLADO.";
+
+    const mensajewa = ` Informacion del cliente:
+- Fecha de entrada: ${fechaactual}
+- Nombre: ${nombre}
+- Teléfono: ${telefono}
+- Ubicacion: ${ubicacion}
+- Cedula: ${cedula} 
+- Correo: ${correo}
+
+* Terminos: ${termino}`;
+
+    const numeroWhatsApp = "50765281803";
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajewa)}`;
+    res.redirect(url); // Redirige automáticamente al enlace de WhatsApp
+
+    //---------------
+
+
+    // const numero = '12345678'; // Número sin guión
+    // const mensaje = encodeURIComponent('Hola mundo'); // Codifica caracteres especiales
+
+    // const enlace = `https://wa.me/${numero}?text=${mensaje}`;
+    // res.redirect(enlace); // Redirige automáticamente al enlace de WhatsApp
+
+    // res.json({ enlace });
 
 
 
 
 
-    res.render('personas/client', { cliente: client_actual });
+    // res.render('personas/client', { cliente: client_actual });//*********** */
 
     //console.log(global);
 });
