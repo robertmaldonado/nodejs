@@ -167,8 +167,20 @@ router.post('/client', async (req, res) => {
 
     //client_actual.telefono = telefono;
     ubicacion = client_actual.ubicacion = ubicacion.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
-    cedula = client_actual.cedula = cedula.trim().replace(/\s+/g, ''); //quita cualquier  espacio 
-    correo = client_actual.correo = correo.trim().replace(/\s+/g, ''); //quita cualquier  espacio 
+
+    if (cedula) {
+        cedula = client_actual.cedula = cedula.trim().replace(/\s+/g, ''); //quita cualquier  espacio 
+    } else {
+        client_actual.cedula = cedula;
+    }
+
+    if (correo) {
+        correo = client_actual.correo = correo.trim().replace(/\s+/g, ''); //quita cualquier  espacio
+    } else {
+
+        client_actual.correo = correo;
+    }
+
     client_actual.fecha = fechaactual;
 
 

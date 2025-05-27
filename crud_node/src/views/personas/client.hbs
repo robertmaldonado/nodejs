@@ -58,31 +58,33 @@
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control  fs-4" id="nombre" name="nombre"
-                            placeholder="Nombre y Apellido" required>
+                            placeholder="Nombre y Apellido" value="{{cliente.nombre}}" required>
                         <!-- <div id="emailHelp1" class="form-text">Ingrese su nombre</div> -->
                     </div>
                     <!-- Teléfono -->
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="tel" class="form-control  fs-4" id="telefono" name="telefono"
-                            placeholder="XXXX-XXXX" required>
+                            placeholder="XXXX-XXXX" value="{{cliente.telefono}}" required>
                         <!-- <div id="emailHelp2" class="form-text">WhatsApp Ej: 1234-5678</div> -->
                     </div>
                     <!-- Fecha de Retiro -->
                     <div class="mb-3">
                         <label for="ubicacion" class="form-label">Ubicacion</label>
                         <input type="text" class="form-control  fs-4" id="ubicacion" name="ubicacion"
-                            placeholder="Barrio o Barriada" placeholder="" required>
+                            placeholder="Barrio o Barriada" placeholder="" value="{{cliente.ubicacion}}" required>
                         <!-- <div id="emailHelp" class="form-text">Ingrese su barrio o barriada donde reside</div> -->
                     </div>
                     <div class="mb-3">
                         <label for="cedula" class="form-label">Cedula</label>
-                        <input type="text" class="form-control  fs-4" id="cedula" name="cedula" placeholder="opcional">
+                        <input type="text" class="form-control  fs-4" id="cedula" name="cedula" placeholder="opcional"
+                            value="{{cliente.cedula}}">
                         <!-- <div id="cedulaHelp" class="form-text">Ingrese su Cedula</div> -->
                     </div>
                     <div class="mb-3">
                         <label for="correo" class="form-label">Correo</label>
-                        <input type="email" class="form-control  fs-4" id="correo" name="correo" placeholder="opcional">
+                        <input type="email" class="form-control  fs-4" id="correo" name="correo" placeholder="opcional"
+                            value="{{cliente.correo}}">
                         <div id="correoHelp" class="form-text ">Ingrese su Correo Electronico</div>
                     </div>
                     <!-- Botón Enviar -->
