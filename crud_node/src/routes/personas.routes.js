@@ -1,7 +1,21 @@
 import { Router } from 'express'
 import pool from '../database.js'
 
+//import dotenv from 'dotenv';
+//import 'dotenv/config'; // Esta es la forma más concisa con ES6
+//dotenv.config(); // Cargar variables de entorno
+
+import dotenv from 'dotenv'; // type module     con  "type": "module",
+// Configurar dotenv para cargar variables del archivo .env
+dotenv.config(); // type module  con "type": "module",
+
+console.log(process.env.NOMBRE_SECRETO)
+console.log(process.env.PUERTO_NUMERO)
+
+
 const router = Router();
+
+//console.log(`Host de la base de datos: ${DB_HOST}`);
 
 //let var_id_cliente;
 let var_id_cliente = null; // Variable para almacenar el id_cliente cliente actual, si es nul no existe el cliente
@@ -138,6 +152,9 @@ router.post('/client', async (req, res) => {
     // res.redirect(301, 'https://www.electronicarj.com'); 
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
+
+    console.log(process.env.NOMBRE_SECRETO)
+console.log(process.env.PUERTO_NUMERO)
 
     let { nombre, telefono, ubicacion, cedula, correo, fechaactual } = req.body;
 
