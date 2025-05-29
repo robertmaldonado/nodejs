@@ -42,13 +42,13 @@ const client_actual = {
     fecha: null
 };
 
-client_actual.email = "nuevoCorreo@example.com";
+//client_actual.email = "nuevoCorreo@example.com";
 //console.log(client_actual.nombre); // Imprime "Juan"
 //--------------------------------------------------------------------
 
 
 //client_actual.nombre = null;
-client_actual.nombre = "roberto";
+//client_actual.nombre = "roberto";
 
 router.get('/add', (req, res) => {
     res.render('personas/add');
@@ -177,7 +177,7 @@ router.post('/client', async (req, res) => {
 
 
     // client_actual.nombre = nombre;
-    client_actual.telefono = valorxz;
+    telefono = client_actual.telefono = valorxz;
     nombre = client_actual.nombre = nombre.trim().replace(/\s+/g, ' '); //quita espacio al inicio y final y mas de un espacio intermedios
 
     //client_actual.telefono = telefono;
