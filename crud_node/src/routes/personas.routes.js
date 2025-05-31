@@ -188,7 +188,7 @@ router.post('/client', async (req, res) => {
     let valorxz = validarYCorregirTelefono(telefono);
 
     if (!valorxz) {
-        res.status(500).json({ error: "El teléfono está incorrecto. Debe tener el formato XXXX-XXXX." });
+        return res.status(500).json({ error: "El teléfono está incorrecto. Debe tener el formato XXXX-XXXX." });
     }
 
 
