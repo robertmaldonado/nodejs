@@ -36,6 +36,8 @@ const hbsConfig = {
     extname: '.hbs'
 };
 
+
+
 app.engine('.hbs', engine(hbsConfig));
 app.set('view engine', '.hbs');
 

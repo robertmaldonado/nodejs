@@ -132,12 +132,29 @@ router.post('/service', async (req, res) => {
 
 
 router.get('/client', (req, res) => {
-    //res.render('personas/client');
-    res.render('personas/client', { cliente: client_actual });
+
+    // res.render('personas/client', { title: 'Página sin partials', layout: 'noPartials' });
+    // res.render('personas/client', { cliente: client_actual });
+
+
+    res.render('personas/client', {
+        title: 'Página sin partials',
+        layout: 'noPartials',
+        cliente: client_actual
+    });
+
+
+
     console.log("dirigio a cliente"); // esto es para hacer pruebas
     // res.redirect(301, 'https://www.electronicarj.com'); 
     // res.redirect('https://www.electronicarj.com');  // https://electronicarj.com/app/tools/reg1.html
     //// res.redirect('https://electronicarj.com/app/tools/reg1.html');
+
+
+
+
+
+
 
     //console.log(global);
 });
@@ -319,6 +336,20 @@ router.get('/cadd', (req, res) => {
     console.log("dirigio a cliente jhfjf"); // esto es para hacer pruebas
     res.render('personas/cadd', { cliente: client_actual });
 });
+
+// limpiar
+router.get('/clear', (req, res) => {
+    client_actual.nombre = null;
+    client_actual.telefono = null;
+    client_actual.ubicacion = null;
+    client_actual.correo = null;
+    client_actual.cedula = null;
+
+    //res.render('personas/client', { cliente: client_actual });
+
+    res.render('personas/client', { title: 'Página sin partials', layout: 'noPartials', cliente: client_actual });
+});
+
 
 
 
