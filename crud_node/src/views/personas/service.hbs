@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Formulario</h2>
+    <h2 class="text-center mb-4">Agregar Servicio</h2>
 
 
     <form action="/cadd" method="post" id="form">
@@ -14,23 +14,23 @@
                     <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="nombreCliente" class="form-label">Telefono</label>
-                            <input type="text" class="form-control" id="nombreCliente" value="{{cliente.telefono}}"
-                                placeholder="Ingrese su nombre" disabled>
+                            <label for="telefono" class="form-label">Telefono</label>
+                            <input type="text" class="form-control" id="telefono" value="{{cliente.telefono}}"
+                                placeholder="Ingrese su nombre">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="emailCliente" class="form-label">Nombre</label>
-                            <input type="email" class="form-control" id="emailCliente" value="{{cliente.nombre}} "
-                                placeholder="Ingrese su correo" disabled>
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="email" class="form-control" id="nombre" value="{{cliente.nombre}} "
+                                placeholder="Ingrese su correo">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="direccionCliente" class="form-label">ubicacion</label>
-                            <input type="text" class="form-control" id="direccionCliente" value="{{cliente.ubicacion}} "
-                                placeholder="Ingrese su dirección" disabled>
+                            <label for="ubicacion" class="form-label">ubicacion</label>
+                            <input type="text" class="form-control" id="ubicacion" value="{{cliente.ubicacion}} "
+                                placeholder="Ingrese su dirección">
                         </div>
                     </div>
                 </div>
@@ -38,15 +38,15 @@
                     <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="nombreCliente" class="form-label">Cedula</label>
-                            <input type="text" class="form-control" id="nombreCliente" value="{{cliente.cedula}} "
+                            <label for="cedula" class="form-label">Cedula</label>
+                            <input type="text" class="form-control" id="cedula" value="{{cliente.cedula}} "
                                 placeholder="Ingrese su nombre">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="emailCliente" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="emailCliente" value="{{cliente.correo}} "
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correo" value="{{cliente.correo}} "
                                 placeholder="Ingrese su correo">
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="mb-3">
                             <label for="fecha" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="fecha" value="{{cliente.fecha}}"
-                                placeholder="Ingrese su dirección" disabled>
+                                placeholder="Ingrese su dirección">
                         </div>
                     </div>
                 </div>
@@ -63,20 +63,22 @@
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="nombreCliente" class="form-label">Cedula</label>
-                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre">
+                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre"
+                                disabled>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="emailCliente" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo">
+                            <input type="email" class="form-control" id="emailCliente" placeholder="Ingrese su correo"
+                                disabled>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="direccionCliente" class="form-label">Fecha</label>
                             <input type="text" class="form-control" id="direccionCliente"
-                                placeholder="Ingrese su dirección">
+                                placeholder="Ingrese su dirección" disabled>
                         </div>
                     </div>
                 </div>
@@ -84,13 +86,13 @@
                     <div class="mb-3">
                         <label for="nota" class="form-label">Falla del equipo </label>
                         <textarea class="form-control" name="nota" id="nota" rows="3"
-                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente" disabled></textarea>
                     </div>
                     <div class="row mb-3">
                         <div class="mb-3">
                             <label for="nota" class="form-label">Falla del equipo </label>
                             <textarea class="form-control" name="nota" id="nota" rows="3"
-                                placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                                placeholder="agregar alguna nota de precaucuion sobre el cliente" disabled></textarea>
                         </div>
 
                     </div>
@@ -129,7 +131,7 @@
                 <!-- Primera fila -->
                 <div class="row mb-3">
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="nivel" class="form-label">Procedencia</label>
                         <select class="form-select" id="equipo" aria-label="Default select example">
                             <option>Selecciona un nivel</option>
@@ -140,7 +142,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="nivel" class="form-label">equipo</label>
                         <select class="form-select" id="equipo" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
@@ -154,9 +156,19 @@
                         <label for="nivel" class="form-label">Estatus</label>
                         <select class="form-select" id="nivel" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto" selected>revisar</option>
-                            <option value="medio">revisado</option>
-                            <option value="bajo">retirado</option>
+                            <option value="alto" selected> Recibido</option>
+                            <option value="medio">Revision</option>
+                            <option value="bajo">Presupuesto</option>
+                            <option value="medio">Reparando</option>
+                            <option value="bajo">Reparado</option>
+                            <option value="medio">Entregado</option>
+                            <option value="bajo">Repuestos</option>
+                            <option value="bajo">Irreparable </option>
+                            <option value="bajo">Garantia</option>
+
+
+
+
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -166,6 +178,10 @@
                     <div class="col-md-2">
                         <label for="fechaout" class="form-label">Fecha de salida</label>
                         <input type="date" class="form-control" name="fechaout" id="fechaout">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="fechain" class="form-label">Estimada Entrega</label>
+                        <input type="date" class="form-control" name="fechain" id="fechain">
                     </div>
 
                 </div>
@@ -217,21 +233,22 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="fecha2" class="form-label">NC</label>
-                        <input type="date" class="form-control" id="fecha2">
+                        <input type="date" class="form-control" id="fecha2" disabled>
                     </div>
                     <div class="col-md-4">
                         <label for="nivel" class="form-label">Metodo de pago</label>
                         <select class="form-select" id="nivel" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto">revisar</option>
-                            <option value="medio">revisado</option>
-                            <option value="bajo">retirado</option>
+                            <option value="alto">yappyr</option>
+                            <option value="medio">yappym</option>
+                            <option value="bajo">ACH</option>
+                            <option value="bajo">Efectivo</option>
                         </select>
                     </div>
 
                     <div class="col-md-4">
                         <label for="nivel" class="form-label">Tiempo de reparacion</label>
-                        <select class="form-select" id="nivel" aria-label="Default select example">
+                        <select class="form-select" id="nivel" aria-label="Default select example" disabled>
                             <option selected>Selecciona un nivel</option>
                             <option value="alto">revisar</option>
                             <option value="medio">revisado</option>
@@ -260,7 +277,7 @@
                     <div class="mb-3">
                         <label for="nota" class="form-label">dESCRICION VENTA </label>
                         <textarea class="form-control" name="nota" id="nota" rows="3"
-                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente" disabled></textarea>
                     </div>
                 </div>
 
@@ -300,55 +317,127 @@
 
 
 
+
+
+
+
+
+
+
+<!-- Importar el archivo JavaScript como módulo -->
+{{!--
+<script type="module" src="/js/procesar.js"></script> --}}
+
+
+
+
+
+
+<script>
+    //se ejecuta cuando termina de cargar el DOM
+    document.addEventListener("DOMContentLoaded", function () {
+        const fechaInput = document.getElementById("fechain");
+        const hoy = new Date().toISOString().split("T")[0]; // Formato YYYY-MM-DD
+        fechaInput.value = hoy; // Asigna la fecha actual al input
+        console.log('sumando');
+    });
+</script>
+
+
+
+//
+<script>
+    //  document.getElementById("telefono").addEventListener("input", function () {
+    //    let valor = this.value.replace(/\D/g, ""); // Elimina caracteres no numéricos
+    //  if (valor.length > 4) {
+    //     valor = valor.slice(0, 4) + "-" + valor.slice(4, 8);
+    // }
+    // this.value = valor;
+    // console.log('teclas');
+    // });
+</script>
+
+
+
 <script>
 
 
+    // document.getElementById("telefono").addEventListener("change", function () {
+    //    console.log("Número ingresado:", this.value);
+    // });
 
 
 
 
 
+    document.getElementById('telefono').addEventListener('change', async () => {
 
-    // muestra la fecha actual
+        // const telefono = document.getElementById("telefonob").value;
 
-    // window.onload = function () {
-    //    const fechaInput = document.getElementById("fecha");
-    //   const hoy = new Date();
-    //    fechaInput.value = hoy.toISOString().split('T')[0];
-    //   console.log(fechaInput.value);
-    // };
-
-
-    // para darle formato al numero de telefono cuando tiene 8 digitos
-    const telefonoInput = document.getElementById('telefono');
-
-    telefonoInput.addEventListener('input', function (e) {
-        let input = e.target.value;
-        // Eliminar todo lo que no sea dígito
-        input = input.replace(/\D/g, '');
-
-        // Formatear el número
-        // Aplicar el formato "1234-5678"
-        // Aplicar formato solo si tiene exactamente 8 dígitos
+        //console.log("telefono ingresado:", telefono.value);
+        console.log("name:", nombre.value);
+        console.log("ubicacion:", ubicacion.value);
+        console.log("cedula:", cedula.value);
+        console.log("correo:", correo.value);
+        console.log("fecha:", fecha.value);
+        console.log('teclas');
 
 
-        // Aplicar formato solo si tiene exactamente 8 dígitos
-        if (input.length === 8) {
-            input = `${input.slice(0, 4)}-${input.slice(4, 8)}`;
+
+
+        const telefono = document.getElementById("telefono").value;
+        if (!telefono) return; // Si no hay teléfono, sale inmediatamente
+
+        try {
+            // Solicitud POST con fetch
+            const response = await fetch("/check-cedula", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ telefono })
+            });
+
+            if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.exists) {
+                const campos = {
+                    name: "nombre",
+                    correo: "correo",
+                    fecha: "fecha",
+                    telefono: "telefono",
+                    // nota: "nota",
+                    //saldo: "saldo",
+                    cedula: "cedula",
+                    address: "ubicacion"
+                };
+
+                Object.entries(campos).forEach(([key, id]) => {
+                    document.getElementById(id).value = data.data[key] || "";
+                });
+
+                // Actualizar valores exportables
+                document.getElementById("variable_oculta").value = data.data.cedula || "";
+            }
+
+        } catch (error) {
+            console.error("Error al verificar la cédula:", error.message);
         }
 
-        // Establecer el valor formateado
-        e.target.value = input;
+
     });
 
 
 
 
-</script>
 
-<!-- Importar el archivo JavaScript como módulo -->
-{{!--
-<script type="module" src="/js/procesar.js"></script> --}}
+
+
+
+
+
+</script>
 
 
 
@@ -360,7 +449,6 @@
     console.log(sumar(5, 3));
     console.log(restar(10, 4));
 </script>
-
 
 {{!--
 <script type="module" src="/js/main.js"></script> --}}

@@ -59,13 +59,14 @@
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control  fs-4" id="nombre" name="nombre"
                             placeholder="Nombre y Apellido" value="{{cliente.nombre}}" required>
+                        <div id="correoHelp" class="form-text ">Primer Nombre y Primer Apellido.</div>
                         <!-- <div id="emailHelp1" class="form-text">Ingrese su nombre</div> -->
                     </div>
                     <!-- Teléfono -->
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="tel" class="form-control  fs-4" id="telefono" name="telefono" placeholder=""
-                            value="{{cliente.telefono}}" required>
+                            value="{{cliente.telefono}}" pattern="(\d{4}-\d{4}|\d{8})" required>
                         <!-- <div id="emailHelp2" class="form-text">WhatsApp Ej: 1234-5678</div> -->
                     </div>
                     <!-- Fecha de Retiro -->
