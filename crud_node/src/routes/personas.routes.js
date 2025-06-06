@@ -228,7 +228,7 @@ router.post('/client', async (req, res) => {
 
 
     // Ejecución de la consulta con parámetros
-
+    let usuarioId;
 
 
     try {
@@ -241,12 +241,14 @@ router.post('/client', async (req, res) => {
         //console.log(`Usuariotelefonodsfdfs : ${rows1}`);
         console.log("Contenido de rows1:", rows1);
 
+
+
         // Comprobar si se encontró algún usuario
         if (rows1.length > 0) {
             console.log(`Usuario encontrado con ID: ${rows1[0].id_cliente}`);
 
             // 2. Si existe, actualizar
-            const usuarioId = rows1[0].id_cliente;
+            usuarioId = rows1[0].id_cliente; // antes era const
 
 
             const query = `UPDATE clientes SET name = ?, address = ?, correo = ?, fecha = ?, cedula = ? WHERE id_cliente = ?`;
@@ -270,6 +272,8 @@ router.post('/client', async (req, res) => {
 
             if (result.affectedRows > 0) {
                 console.log("Usuario agregado correctamente con ID:", result.insertId);
+
+                usuarioId = result.insertId
                 // res.json({ mensaje: "Usuario agregado correctamente.", id: result.insertId });
             } else {
                 console.log("Error al insertar usuario.");
@@ -296,12 +300,14 @@ router.post('/client', async (req, res) => {
     const termino = " SI, ESTOY DE ACUERDO E INFORMADO  Tengo 15 DIAS desde la notificación para retirar mi equipo; de lo contrario, será RECICLADO.";
 
     const mensajewa = ` Informacion del cliente:
+- Numero de cliente: C${usuarioId}
 - Fecha de entrada: ${fechaactual}
 - Nombre: ${nombre}
 - Teléfono: ${telefono}
 - Ubicacion: ${ubicacion}
-- Cedula: ${cedula} 
 - Correo: ${correo}
+- Cedula: ${cedula} 
+
 
 * Terminos: ${termino}`;
 
@@ -533,6 +539,11 @@ router.post('/check-cedula', async (req, res) => {
         //const [rows] = await pool.query("SELECT * FROM clientes WHERE cedula = ?", [cedula]);
         // const query = "SELECT name,saldo,telefono,cedula, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
         const query = "SELECT name,saldo,telefono,address,correo,cedula,id_cliente, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE telefono = ?";
+        // const query = "SELECT name,saldo,telefono,address,correo,cedula,id_cliente,fecha FROM clientes WHERE telefono = ?";// da error
+        //const query = "SELECT name,saldo,telefono,address,correo,cedula,id_cliente,DATE(fecha) AS fecha FROM clientes WHERE telefono = ?"; //error
+
+
+
         const [rows] = await pool.query(query, [telefono]);
 
         console.log("recibienviado:", rows[0]);

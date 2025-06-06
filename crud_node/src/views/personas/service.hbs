@@ -6,7 +6,7 @@
         <!-- Tarjeta para Datos del Cliente -->
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
-                <h5 class="mb-0">Datos del Cliente</h5>
+                <h5 class="mb-0">Datos del Cliente </h5>
             </div>
             <div class="card-body">
                 <!-- Usamos row para organizar los inputs -->
@@ -62,9 +62,9 @@
                     <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="nombreCliente" class="form-label">Cedula</label>
-                            <input type="text" class="form-control" id="nombreCliente" placeholder="Ingrese su nombre"
-                                disabled>
+                            <label for="idcliente" class="form-label">ID del Cliente</label>
+                            <input type="text" class="form-control" id="idcliente" placeholder="Ingrese su nombre"
+                                value="{{cliente.id_cliente}}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
@@ -410,7 +410,8 @@
                     // nota: "nota",
                     //saldo: "saldo",
                     cedula: "cedula",
-                    address: "ubicacion"
+                    address: "ubicacion",
+                    id_cliente: "idcliente"
                 };
 
                 Object.entries(campos).forEach(([key, id]) => {
