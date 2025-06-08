@@ -2,7 +2,7 @@
     <h2 class="text-center mb-4">Agregar Servicio</h2>
 
 
-    <form action="/cadd" method="post" id="form">
+    <form action="/service" method="post" id="form">
         <!-- Tarjeta para Datos del Cliente -->
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
@@ -22,7 +22,7 @@
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="email" class="form-control" id="nombre" value="{{cliente.nombre}} "
+                            <input type="text" class="form-control" id="nombre" value="{{cliente.nombre}} "
                                 placeholder="Ingrese su correo">
                         </div>
                     </div>
@@ -62,9 +62,9 @@
                     <!-- Cada input ocupa 12 columnas en móvil y 4 en escritorio (3 columnas en total) -->
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
-                            <label for="idcliente" class="form-label">ID del Cliente</label>
-                            <input type="text" class="form-control" id="idcliente" placeholder="Ingrese su nombre"
-                                value="{{cliente.id_cliente}}" readonly>
+                            <label for="id_cliente" class="form-label">ID del Cliente</label>
+                            <input type="number" class="form-control" id="id_cliente" name="id_cliente"
+                                placeholder="Ingrese su nombre" value="{{cliente.id_cliente}}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
@@ -77,7 +77,7 @@
                     <div class="col-12 col-md-4">
                         <div class="mb-3">
                             <label for="direccionCliente" class="form-label">Fecha</label>
-                            <input type="text" class="form-control" id="direccionCliente"
+                            <input type="date" class="form-control" id="direccionCliente"
                                 placeholder="Ingrese su dirección" disabled>
                         </div>
                     </div>
@@ -90,8 +90,8 @@
                     </div>
                     <div class="row mb-3">
                         <div class="mb-3">
-                            <label for="nota" class="form-label">Falla del equipo </label>
-                            <textarea class="form-control" name="nota" id="nota" rows="3"
+                            <label for="notax" class="form-label">Falla del equipo </label>
+                            <textarea class="form-control" name="notax" id="notax" rows="3"
                                 placeholder="agregar alguna nota de precaucuion sobre el cliente" disabled></textarea>
                         </div>
 
@@ -132,39 +132,40 @@
                 <div class="row mb-3">
 
                     <div class="col-md-2">
-                        <label for="nivel" class="form-label">Procedencia</label>
-                        <select class="form-select" id="equipo" aria-label="Default select example">
+                        <label for="proced" class="form-label">Procedencia</label>
+                        <select class="form-select" id="proced" name="proced" aria-label="Default select example">
                             <option>Selecciona un nivel</option>
-                            <option value="alto" selected>Servicio </option>
-                            <option value="medio">Venta</option>
+                            <option value="servicio" selected>Servicio </option>
+                            <option value="venta">Venta</option>
 
 
                         </select>
                     </div>
 
                     <div class="col-md-2">
-                        <label for="nivel" class="form-label">equipo</label>
-                        <select class="form-select" id="equipo" aria-label="Default select example">
+                        <label for="equipo" class="form-label">equipo</label>
+                        <select class="form-select" id="equipo" name="equipo" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto">tv</option>
-                            <option value="medio">freidora</option>
-                            <option value="bajo">sonido</option>
+                            <option value="tv" selected>tv</option>
+                            <option value="freidora">freidora</option>
+                            <option value="cafetera">sonido</option>
                         </select>
                     </div>
 
                     <div class="col-md-2">
-                        <label for="nivel" class="form-label">Estatus</label>
-                        <select class="form-select" id="nivel" aria-label="Default select example">
+                        <label for="estatus" class="form-label">Estatus</label>
+                        <select class="form-select" id="estatus" name="estatus" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto" selected> Recibido</option>
-                            <option value="medio">Revision</option>
-                            <option value="bajo">Presupuesto</option>
-                            <option value="medio">Reparando</option>
-                            <option value="bajo">Reparado</option>
-                            <option value="medio">Entregado</option>
-                            <option value="bajo">Repuestos</option>
-                            <option value="bajo">Irreparable </option>
-                            <option value="bajo">Garantia</option>
+                            <option value="recibido" selected> Recibido</option>
+                            <option value="revision">Revision</option>
+                            <option value="presupuesto">Presupuesto</option>
+                            <option value="reparando">Reparando</option>
+                            <option value="reparado">Reparado</option>
+                            <option value="entregado">Entregado</option>
+                            <option value="repuestos">Repuestos</option>
+                            <option value="irreparable">Irreparable </option>
+                            <option value="garantia">Garantia</option>
+                            <option value="garantia">Garantijgga</option>
 
 
 
@@ -172,16 +173,16 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="fechain" class="form-label">Fecha de entrada</label>
-                        <input type="date" class="form-control" name="fechain" id="fechain">
+                        <label for="f_in" class="form-label">Fecha de entrada</label>
+                        <input type="date" class="form-control" name="f_in" id="f_in">
                     </div>
                     <div class="col-md-2">
-                        <label for="fechaout" class="form-label">Fecha de salida</label>
-                        <input type="date" class="form-control" name="fechaout" id="fechaout">
+                        <label for="f_sal" class="form-label">Fecha de salida</label>
+                        <input type="date" class="form-control" name="f_sal" id="f_sal">
                     </div>
                     <div class="col-md-2">
-                        <label for="fechain" class="form-label">Estimada Entrega</label>
-                        <input type="date" class="form-control" name="fechain" id="fechain">
+                        <label for="fer" class="form-label">Estimada Entrega</label>
+                        <input type="date" class="form-control" name="fer" id="fer">
                     </div>
 
                 </div>
@@ -189,21 +190,22 @@
                 <!-- Segunda fila -->
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label for="fecha2" class="form-label">Serial</label>
-                        <input type="date" class="form-control" id="fecha2">
+                        <label for="serial" class="form-label">Serial</label>
+                        <input type="text" class="form-control" id="serial" name="serial">
                     </div>
                     <div class="col-md-4">
-                        <label for="direccion" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu dirección">
+                        <label for="model" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="model" name="model"
+                            placeholder="Ingresa tu dirección">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="nivel" class="form-label">Marca</label>
-                        <select class="form-select" id="nivel" aria-label="Default select example">
+                        <label for="marca" class="form-label">Marca</label>
+                        <select class="form-select" id="marca" name="marca" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto">revisar</option>
-                            <option value="medio">revisado</option>
-                            <option value="bajo">retirado</option>
+                            <option value="lg" selected>LG</option>
+                            <option value="samsung">SAMSUNG</option>
+                            <option value="nisato">NISATO</option>
                         </select>
                     </div>
                 </div>
@@ -211,38 +213,39 @@
                 <!-- Segunda fila -->
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label for="fecha2" class="form-label">Presupuesto</label>
-                        <input type="date" class="form-control" id="fecha2">
+                        <label for="presup" class="form-label">Presupuesto</label>
+                        <input type="number" class="form-control" id="presup" name="presup">
                     </div>
                     <div class="col-md-4">
-                        <label for="direccion" class="form-label">Abono</label>
-                        <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu dirección">
+                        <label for="abono" class="form-label">Abono</label>
+                        <input type="number" class="form-control" id="abono" name="abono"
+                            placeholder="Ingresa tu dirección">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="nivel" class="form-label">Pulgadas</label>
-                        <select class="form-select" id="nivel" aria-label="Default select example">
+                        <label for="pulg" class="form-label">Pulgadas</label>
+                        <select class="form-select" id="pulg" name="pulg" aria-label="Default select example">
                             <option selected>Selecciona Pulgadas</option>
-                            <option value="alto">24</option>
-                            <option value="medio">28</option>
-                            <option value="bajo">32</option>
+                            <option value="24">24</option>
+                            <option value="28">28</option>
+                            <option value="32" selected>32</option>
                         </select>
                     </div>
                 </div>
                 <!-- Segunda fila -->
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label for="fecha2" class="form-label">NC</label>
-                        <input type="date" class="form-control" id="fecha2" disabled>
+                        <label for="costo" class="form-label">Costos</label>
+                        <input type="number" class="form-control" id="costo" name="costo">
                     </div>
                     <div class="col-md-4">
-                        <label for="nivel" class="form-label">Metodo de pago</label>
-                        <select class="form-select" id="nivel" aria-label="Default select example">
+                        <label for="met_pg" class="form-label">Metodo de pago</label>
+                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example">
                             <option selected>Selecciona un nivel</option>
-                            <option value="alto">yappyr</option>
-                            <option value="medio">yappym</option>
-                            <option value="bajo">ACH</option>
-                            <option value="bajo">Efectivo</option>
+                            <option value="yappyr" selected>yappyr</option>
+                            <option value="yappym">yappym</option>
+                            <option value="ach">ACH</option>
+                            <option value="efectivo">Efectivo</option>
                         </select>
                     </div>
 
@@ -259,25 +262,25 @@
 
                 <div class="row mb-3">
                     <div class="mb-3">
-                        <label for="nota" class="form-label">Falla del equipo </label>
-                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                        <label for="falla" class="form-label">Falla del equipo </label>
+                        <textarea class="form-control" name="falla" id="falla" rows="3"
                             placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="mb-3">
-                        <label for="nota" class="form-label">Daño del equipo (Tecnico) </label>
-                        <textarea class="form-control" name="nota" id="nota" rows="3"
+                        <label for="dano" class="form-label">Daño del equipo (Tecnico) </label>
+                        <textarea class="form-control" name="dano" id="dano" rows="3"
                             placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="mb-3">
-                        <label for="nota" class="form-label">dESCRICION VENTA </label>
-                        <textarea class="form-control" name="nota" id="nota" rows="3"
-                            placeholder="agregar alguna nota de precaucuion sobre el cliente" disabled></textarea>
+                        <label for="repuestos" class="form-label">Repuestos </label>
+                        <textarea class="form-control" name="repuestos" id="repuestos" rows="3"
+                            placeholder="agregar alguna nota de precaucuion sobre el cliente"></textarea>
                     </div>
                 </div>
 
@@ -287,8 +290,8 @@
                     <div class="col-md-4">
 
 
-                        <label for="saldo" class="form-label">NC</label>
-                        <input class="form-control" type="number" step="0.01" name="saldo" id="saldo"
+                        <label for="saldoh" class="form-label">NC</label>
+                        <input class="form-control" type="number" step="0.01" name="saldo" id="saldoh"
                             placeholder=" gasto total del cliente" readonly>
 
                         <input type="hidden" name="variable_oculta" id="variable_oculta" value="valor_predefinido">
@@ -336,7 +339,7 @@
 <script>
     //se ejecuta cuando termina de cargar el DOM
     document.addEventListener("DOMContentLoaded", function () {
-        const fechaInput = document.getElementById("fechain");
+        const fechaInput = document.getElementById("f_in");
         const hoy = new Date().toISOString().split("T")[0]; // Formato YYYY-MM-DD
         fechaInput.value = hoy; // Asigna la fecha actual al input
         console.log('sumando');
@@ -411,7 +414,7 @@
                     //saldo: "saldo",
                     cedula: "cedula",
                     address: "ubicacion",
-                    id_cliente: "idcliente"
+                    id_cliente: "id_cliente"
                 };
 
                 Object.entries(campos).forEach(([key, id]) => {

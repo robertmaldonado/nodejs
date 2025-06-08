@@ -68,60 +68,39 @@ router.get('/service', (req, res) => {
     //console.log(global);
 });
 
+
+
 router.post('/service', async (req, res) => {
-    //console.log("recibiendo al guardar:", req.body); // esto es para hacer pruebas
-    // console.log(req.body);
-    // console.log(var_id_cliente);
-    console.log("id guardado en servidor node", var_id_cliente); // esto es para hacer pruebas
     try {
+        const requiredFields = ["id_cliente", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos", "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano"];
 
-        const { id_cliente, equipo, estatus, falla, f_in, f_sal, rep_desc, costo, fer, met_pg, presup, proced, serial, model, marca, abono, pulg, dano, venta_dsc } = req.body;  // , telefono, correo, fecha, cedula, nota, gasto 
+        const newService = Object.fromEntries(
+            requiredFields.map(field => [field, req.body[field] || null])
+        );
 
 
-        const newcservice = {
-            id_cliente, equipo: equipo || null, correo: correo || null, fecha, cedula: cedula || null, nota, saldo, address: ubicacion || null  //  , telefono, correo, fecha, cedula, nota, gasto
+
+        console.log('Datos recibidos:', newService);
+
+
+        if (!newService.id_cliente) {
+            return res.status(400).json({ message: "ID del cliente es obligatorio." });
         }
 
-        // if (!newcliente.correo) {
-        //     datosCliente.correo = null;
-        // }
 
-        // const datosCliente = { nombre, correo: correo || null }; // Si correo no existe, lo dejamos como NULL
+        const query = "INSERT INTO servicios SET ?";
+        //await pool.query(query, [newService]);
 
-        // await pool.query('INSERT INTO clientes SET ?', [newcliente]);
 
-        const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+        // Insertar datos en la tabla correcta (¿'services' en lugar de 'clientes'?)
+        const [result] = await pool.query(query, [newService]);
 
-        // Obtener el ID del cliente recién insertado 
-        const insertedId = result.insertId;
-        console.log("cliente nuevo su id es", insertedId); // esto es para hacer pruebas
+        console.log("Nuevo servicio registrado, ID:", result.insertId);
 
         res.redirect('/');
-        //var_id_cliente = id_cliente; // Asignación a la nueva variable id del cliente actual en caso que exista error hay que sacar el id actual del cliente y guardarlo en la variable
-    }
-    catch (err) {
-        res.status(500).json({ message: err.message });
-
-
-        /*  app.post('/usuario', async (req, res) => {
-             const { nombre, telefono, direccion } = req.body;
-           
-             if (!nombre || !telefono || !direccion) {
-               return res.status(400).json({ success: false, message: 'Faltan campos requeridos' });
-             }
-           
-             const telefonoRegex = /^\d{4}-\d{4}$/;
-             if (!telefonoRegex.test(telefono)) {
-               return res.status(400).json({ success: false, message: 'Formato de teléfono inválido. Use xxxx-xxxx' });
-             }
-           
-             const resultado = await guardarOActualizarUsuario(nombre, telefono, direccion);
-             res.json(resultado);
-           }); */
-
-
-
-
+    } catch (error) {
+        console.error("Error en la inserción:", error);
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -308,7 +287,6 @@ router.post('/client', async (req, res) => {
 - Correo: ${correo}
 - Cedula: ${cedula} 
 
-
 * Terminos: ${termino}`;
 
     const numeroWhatsApp = "50765281803";
@@ -479,7 +457,10 @@ router.post('/caddxz', async (req, res) => {
 
         // await pool.query('INSERT INTO clientes SET ?', [newcliente]);
 
+
         const [result] = await pool.query('INSERT INTO clientes SET ?', [newcliente]);
+
+
 
         // Obtener el ID del cliente recién insertado 
         const insertedId = result.insertId;
