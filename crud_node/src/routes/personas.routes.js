@@ -72,7 +72,9 @@ router.get('/service', (req, res) => {
 
 router.post('/service', async (req, res) => {
     try {
-        const requiredFields = ["id_cliente", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos", "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano"];
+        const requiredFields = ["id_cliente", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos",
+            "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano",
+            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal"];
 
         const newService = Object.fromEntries(
             requiredFields.map(field => [field, req.body[field] || null])
