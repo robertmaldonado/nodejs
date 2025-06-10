@@ -576,13 +576,52 @@ router.post('/check-cedula', async (req, res) => {
 
 router.get('/list', async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM personas');
+        const [result] = await pool.query('SELECT * FROM clientes');
         //  console.log(result); imprime en la consola del terminal no del navegador es para hacer pruebas
         res.render('personas/list', { personas: result });
     }
     catch (err) {
         res.status(500).json({ message: err.message });
     }
+});
+
+router.get('/listservice', async (req, res) => {
+
+
+    try {
+
+        const queryz = `
+            SELECT equipo, marca, falla, estatus, f_in, repuestos
+            FROM servicios 
+            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+            ORDER BY f_in DESC
+        `;
+
+        const query3 = `
+            SELECT equipo, estatus, marca, falla, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
+            FROM servicios
+            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+            AND estatus != 'entregado'
+            ORDER BY f_in ASC
+        `;
+
+        const query = `
+            SELECT equipo, estatus, marca, falla, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
+            FROM servicios
+            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+            AND estatus != 'entregado'
+            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC
+        `;
+
+        const [rows] = await pool.query(query);
+        console.log("Servicios recientes:", rows);
+        return rows;
+    } catch (error) {
+        console.error("Error obteniendo servicios:", error);
+    }
+
+
+
 });
 
 router.get('/edit/:id', async (req, res) => {

@@ -101,3 +101,14 @@ GROUP BY mes
 
 ORDER BY mes;
 
+
+
+
+// Función para obtener servicios de los últimos 6 meses
+        const query = `
+            SELECT equipo, estatus, falla 
+            FROM servicios 
+            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+            ORDER BY f_in DESC
+        `;
+
