@@ -7,12 +7,14 @@
             <tr class="table-dark">
                 <th scope="col" class="col-1">N</th>
 
-                <th scope="col">ID cliente</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Ubicaccion</th>
-                <th scope="col">cedula</th>
+             
+                <th scope="col">ID servicio</th>
+                <th scope="col">fecha in</th>
+                <th scope="col">equipo</th>
+                <th scope="col">marca</th>
+                <th scope="col">dano</th>
+                <th scope="col">falla</th>
+                <th scope="col">estatus</th>
                 <th scope="col">accion</th>
             </tr>
         </thead>
@@ -20,13 +22,13 @@
             {{#each personas}}
             <tr>
                 <td>{{@index}}</td>
-                <td>{{id_cliente}}</td>
-                <td>{{name}}</td>
-                <td>{{telefono }}</td>
-
-                <td>{{correo }}</td>
-                <td>{{address }}</td>
-                <td>{{cedula }}</td>
+                <td>{{id_servicio }}</td>
+                <td>{{f_in }}</td>
+                <td>{{equipo}}</td>
+                <td>{{marca }}</td>
+                <td>{{dano }}</td>
+                <td>{{falla }}</td>
+                <td>{{estatus }}</td>
 
                 <td>
                     <div class="btn-group">

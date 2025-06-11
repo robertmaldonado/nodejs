@@ -606,16 +606,19 @@ router.get('/listservice', async (req, res) => {
         `;
 
         const query = `
-            SELECT equipo, estatus, marca, falla, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
+            SELECT id_servicio, equipo, estatus, marca, falla, dano, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
             FROM servicios
             WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
             AND estatus != 'entregado'
             ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC
         `;
 
-        const [rows] = await pool.query(query);
-        console.log("Servicios recientes:", rows);
-        return rows;
+        const [result] = await pool.query(query);
+
+        res.render('personas/listservice', { personas: result });
+
+        console.log("Servicios recientes:", result);
+        return result;
     } catch (error) {
         console.error("Error obteniendo servicios:", error);
     }
