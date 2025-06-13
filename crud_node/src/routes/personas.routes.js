@@ -622,10 +622,53 @@ router.get('/listservice', async (req, res) => {
     } catch (error) {
         console.error("Error obteniendo servicios:", error);
     }
-
-
-
 });
+
+router.get('/editservice/:id', async (req, res) => {
+    try {
+
+        const { id } = req.params;// obtenemos el id del servicio
+
+        const [serviciosRowsx] = await pool.query('SELECT * FROM servicios WHERE id_servicio  = ?', [id]);
+
+
+        const [serviciosRows] = await pool.query(`SELECT *, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in ,
+             DATE_FORMAT(f_sal, '%Y-%m-%d') AS f_sal , DATE_FORMAT(fer, '%Y-%m-%d') AS fer  ,
+              DATE_FORMAT(fpabono, '%Y-%m-%d') AS fpabono ,
+               DATE_FORMAT(fpfinal, '%Y-%m-%d') AS fpfinal , DATE_FORMAT(fprevision, '%Y-%m-%d') AS fprevision  FROM servicios WHERE id_servicio = ?`, [id]);
+
+
+        // Es una buena práctica desestructurar el array para obtener la fila, si esperas solo una.
+        const servicio = serviciosRows[0]; // Si esperas un solo servicio
+
+        const idcliente = servicio.id_cliente // obtenemos el id del cliente
+
+
+        const [clientesRowsx] = await pool.query('SELECT * FROM clientes WHERE id_cliente  = ?', [idcliente]);
+        //const [clientesRowsZ] = await pool.query('SELECT * , DATE_FORMAT(f_in, ' % Y -% m -% d') AS f_in   FROM clientes WHERE id_cliente  = ?', [idcliente]);
+        const [clientesRows] = await pool.query(`SELECT *, DATE_FORMAT(fecha, '%Y-%m-%d') AS fecha FROM clientes WHERE id_cliente = ?`, [idcliente]);
+
+        const cliente = clientesRows[0];
+        // res.render('personas/edit', { clientex: cliente });
+
+        console.log("Servicio:", servicio);
+        console.log("cliente:", cliente);
+
+        res.render('personas/editservice', {
+            servicio: servicio, // La variable 'servicio' estará disponible en Handlebars
+            cliente: cliente    // La variable 'cliente' estará disponible en Handlebars
+            // Puedes añadir más variables aquí si las necesitas
+        });
+
+        // res.redirect('/');
+
+
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 
 router.get('/edit/:id', async (req, res) => {
     try {

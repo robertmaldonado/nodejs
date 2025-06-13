@@ -2,7 +2,7 @@
 import express from 'express'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { engine } from 'express-handlebars';
+import { engine } from 'express-handlebars';  // la manera mas moderna de importaerlka
 import morgan from 'morgan';
 import personasRoutes from './routes/personas.routes.js'
 
@@ -10,6 +10,17 @@ import personasRoutes from './routes/personas.routes.js'
 
 //Intialization
 const app = express();
+
+
+// // Registrar el helper 'eq' al configurar express-handlebars
+// app.engine("hbs", engine({
+//     extname: ".hbs",
+//     helpers: {
+//         eq: (a, b) => a === b
+//     }
+// }));
+
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //Settings
@@ -33,7 +44,12 @@ const hbsConfig = {
     defaultLayout: 'main',
     layoutsDir: join(__dirname, 'views', 'layouts'),
     partialsDir: join(__dirname, 'views', 'partials'),
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        eq: (a, b) => a === b // Compara si a y b son iguales
+    }
+
+
 };
 
 

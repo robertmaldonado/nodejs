@@ -7,7 +7,7 @@
             <tr class="table-dark">
                 <th scope="col" class="col-1">N</th>
 
-             
+
                 <th scope="col">ID servicio</th>
                 <th scope="col">fecha in</th>
                 <th scope="col">equipo</th>
@@ -15,6 +15,8 @@
                 <th scope="col">dano</th>
                 <th scope="col">falla</th>
                 <th scope="col">estatus</th>
+
+                <th scope="col">presupuesto</th>
                 <th scope="col">accion</th>
             </tr>
         </thead>
@@ -22,17 +24,18 @@
             {{#each personas}}
             <tr>
                 <td>{{@index}}</td>
-                <td>{{id_servicio }}</td>
-                <td>{{f_in }}</td>
+                <td>{{id_servicio}}</td>
+                <td>{{f_in}}</td>
                 <td>{{equipo}}</td>
-                <td>{{marca }}</td>
-                <td>{{dano }}</td>
-                <td>{{falla }}</td>
-                <td>{{estatus }}</td>
+                <td>{{marca}}</td>
+                <td>{{dano}}</td>
+                <td>{{falla}}</td>
+                <td>{{estatus}}</td>
+                <td>{{presup}}</td>
 
                 <td>
                     <div class="btn-group">
-                        <a href="/edit/{{id}}" class="btn btn-warning p-2">
+                        <a href="/editservice/{{id_servicio}}" class="btn btn-warning p-2">
                             <i class="fa-solid fa-pencil"></i></a>
                         <a href="/delete/{{id}}" class="btn btn-danger p-2">
                             <i class="fa-solid fa-trash"></i></a>
