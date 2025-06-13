@@ -2,7 +2,7 @@
     <h2 class="text-center mb-4">editar Servicio</h2>
 
 
-    <form action="/service" method="post" id="form">
+    <form action="/serviceedit" method="post" id="form">
         <!-- Tarjeta para Datos del Cliente -->
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
@@ -178,7 +178,7 @@
                     <div class="col-md-2">
                         <label for="estatus" class="form-label">Estatus</label>
                         <select class="form-select" id="estatus" name="estatus" aria-label="Default select example">
-                            <option selected>Selecciona un nivel</option>
+                            {{!-- <option selected>Selecciona un nivel</option> --}}
 
 
                             <option value="recibido" {{#if (eq servicio.estatus "recibido" )}}selected{{/if}}>Recibido
@@ -379,21 +379,21 @@
                     <div class="col-md-4">
                         <label for="met_pg" class="form-label">Metodo de pago</label>
                         <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example">
-                            <option selected>Selecciona un nivel</option>
-                            
+                            {{!-- <option selected>Selecciona un nivel</option> --}}
 
-                             <option value="yappyr" {{#if (eq servicio.met_pg "yappyr" )}}selected{{/if}}>yappyr
-                            </option>
 
-                            
-
-                             <option value="yappym" {{#if (eq servicio.met_pg "yappym" )}}selected{{/if}}>yappym
+                            <option value="yappyr" {{#if (eq servicio.met_pg "yappyr" )}}selected{{/if}}>yappyr
                             </option>
 
 
-                          
 
-                             <option value="ach" {{#if (eq servicio.met_pg "ach" )}}selected{{/if}}>ach
+                            <option value="yappym" {{#if (eq servicio.met_pg "yappym" )}}selected{{/if}}>yappym
+                            </option>
+
+
+
+
+                            <option value="ach" {{#if (eq servicio.met_pg "ach" )}}selected{{/if}}>ach
                             </option>
 
                             <option value="efectivo" {{#if (eq servicio.met_pg "efectivo" )}}selected{{/if}}>Efectivo
@@ -443,9 +443,9 @@
                     <div class="col-md-4">
 
 
-                        <label for="saldoh" class="form-label">NC</label>
-                        <input class="form-control" type="number" step="0.01" name="saldo" id="saldoh"
-                            placeholder=" gasto total del cliente" readonly>
+                        <label for="id_servicio" class="form-label">id servicio</label>
+                        <input class="form-control" type="number" name="id_servicio" value="{{servicio.id_servicio }}"
+                            id="id_servicio" readonly>
 
                         <input type="hidden" name="variable_oculta" id="variable_oculta" value="valor_predefinido">
 

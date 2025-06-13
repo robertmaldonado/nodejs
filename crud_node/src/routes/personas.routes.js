@@ -80,24 +80,55 @@ router.post('/service', async (req, res) => {
             requiredFields.map(field => [field, req.body[field] || null])
         );
 
-
-
         console.log('Datos recibidos:', newService);
-
 
         if (!newService.id_cliente) {
             return res.status(400).json({ message: "ID del cliente es obligatorio." });
         }
 
-
         const query = "INSERT INTO servicios SET ?";
         //await pool.query(query, [newService]);
-
 
         // Insertar datos en la tabla correcta (¿'services' en lugar de 'clientes'?)
         const [result] = await pool.query(query, [newService]);
 
         console.log("Nuevo servicio registrado, ID:", result.insertId);
+
+        res.redirect('/');
+    } catch (error) {
+        console.error("Error en la inserción:", error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.post('/serviceedit', async (req, res) => {       // para editar servicio
+    try {
+        const requiredFields = ["id_cliente", "id_servicio", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos",
+            "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano",
+            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal"];
+
+        const newService = Object.fromEntries(
+            requiredFields.map(field => [field, req.body[field] || null])
+        );
+
+        const query = "UPDATE servicios SET ? WHERE id_servicio = ?";
+        console.log('Datos recibidos serviceedit:', newService);
+
+        if (!newService.id_cliente) {
+            return res.status(400).json({ message: "ID del cliente es obligatorio." });
+        }
+
+        // const query = 'UPDATE personas SET ? WHERE id = ?', [newServicex, id];
+
+        // await pool.query('UPDATE personas SET ? WHERE id = ?', [editPersona, id]);
+        //await pool.query(query, [newService]);
+
+        // Insertar datos en la tabla correcta (¿'services' en lugar de 'clientes'?)
+        const [result] = await pool.query(query, [newService, newService.id_servicio]);   
+
+        //  await pool.query('UPDATE personas SET ? WHERE id = ?', [editPersona, id]);
+
+        //  console.log("Nuevo servicio registrado, ID:", result.insertId);
 
         res.redirect('/');
     } catch (error) {
