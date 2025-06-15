@@ -167,9 +167,25 @@
 
                             <option value="monitor" {{#if (eq servicio.equipo "monitor" )}}selected{{/if}}>Monitor
                             </option>
-                            <option value="cafetera" {{#if (eq servicio.equipo "cafetera" )}}selected{{/if}}>
-                                Ventiladorxx
+                            <option value="microonda" {{#if (eq servicio.equipo "microonda" )}}selected{{/if}}>
+                                microonda
                             </option>
+                            <option value="sonido" {{#if (eq servicio.equipo "sonido" )}}selected{{/if}}>
+                                sonido
+                            </option>
+                            <option value="trituradora papel" {{#if (eq servicio.equipo "trituradora papel"
+                                )}}selected{{/if}}>
+                                trituradora papel
+                            </option>
+                            <option value="fabricador hielo" {{#if (eq servicio.equipo "fabricador hielo"
+                                )}}selected{{/if}}>
+                                fabricador hielo
+                            </option>
+                            <option value="bateria" {{#if (eq servicio.equipo "bateria" )}}selected{{/if}}>
+                                bateria
+                            </option>
+
+
 
 
                         </select>
@@ -281,7 +297,7 @@
                     <div class="col-md-4">
                         <label for="marca" class="form-label">Marca</label>
                         <select class="form-select" id="marca" name="marca" aria-label="Default select example">
-                            <option selected>Selecciona un nivel</option>
+                            {{!-- <option selected>Selecciona un nivel</option> --}}
 
 
 
@@ -291,16 +307,48 @@
 
 
 
-                            <option value="samsung" {{#if (eq servicio.samsung "lg" )}}selected{{/if}}>
+                            <option value="samsung" {{#if (eq servicio.marca "samsung" )}}selected{{/if}}>
                                 samsung
                             </option>
 
 
 
 
-                            <option value="sony" {{#if (eq servicio.samsung "sony" )}}selected{{/if}}>
+                            <option value="sony" {{#if (eq servicio.marca "sony" )}}selected{{/if}}>
                                 sony
                             </option>
+
+                            <option value="generico" {{#if (eq servicio.marca "generico" )}}selected{{/if}}>
+                                generico
+                            </option>
+
+                            <option value="mystic" {{#if (eq servicio.marca "mystic" )}}selected{{/if}}>
+                                mystic
+                            </option>
+                            <option value="lasko" {{#if (eq servicio.marca "lasko" )}}selected{{/if}}>
+                                lasko
+                            </option>
+
+                            <option value="gourmia" {{#if (eq servicio.marca "gourmia" )}}selected{{/if}}>
+                                gourmia
+                            </option>
+                            <option value="hisense" {{#if (eq servicio.marca "hisense" )}}selected{{/if}}>
+                                hisense
+                            </option>
+
+                            <option value="selectron" {{#if (eq servicio.marca "selectron" )}}selected{{/if}}>
+                                selectron
+                            </option>
+
+                            <option value="niu" {{#if (eq servicio.marca "niu" )}}selected{{/if}}>
+                                niu
+                            </option>
+
+                               <option value="niu" {{#if (eq servicio.marca "delonghi" )}}selected{{/if}}>
+                                Delonghi
+                            </option>
+
+ 
 
                         </select>
                     </div>
@@ -323,9 +371,8 @@
 
 
                         <input type="number" class="form-control" id="pulg" name="pulg" value="{{servicio.pulg}}">
-
-
                     </div>
+
                 </div>
 
 

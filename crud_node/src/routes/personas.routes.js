@@ -124,13 +124,15 @@ router.post('/serviceedit', async (req, res) => {       // para editar servicio
         //await pool.query(query, [newService]);
 
         // Insertar datos en la tabla correcta (¿'services' en lugar de 'clientes'?)
-        const [result] = await pool.query(query, [newService, newService.id_servicio]);   
+        const [result] = await pool.query(query, [newService, newService.id_servicio]);
 
         //  await pool.query('UPDATE personas SET ? WHERE id = ?', [editPersona, id]);
 
         //  console.log("Nuevo servicio registrado, ID:", result.insertId);
 
-        res.redirect('/');
+        // res.redirect('/');
+
+        res.redirect('/listservice');
     } catch (error) {
         console.error("Error en la inserción:", error);
         res.status(500).json({ message: error.message });
@@ -636,12 +638,21 @@ router.get('/listservice', async (req, res) => {
             ORDER BY f_in ASC
         `;
 
-        const query = `
+        // no muestra los equips entregados
+        const query8 = `
             SELECT id_servicio, equipo, estatus, marca, falla, dano, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
             FROM servicios
             WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
             AND estatus != 'entregado'
             ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC
+        `;
+
+        const query = `
+            SELECT id_servicio, equipo, estatus, marca, falla, dano, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
+            FROM servicios
+            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+          
+            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto', 'repuestos', 'reparando', 'reparado', 'entregado'), f_in ASC
         `;
 
         const [result] = await pool.query(query);
