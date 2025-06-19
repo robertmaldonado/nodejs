@@ -94,7 +94,8 @@ router.post('/service', async (req, res) => {
 
         console.log("Nuevo servicio registrado, ID:", result.insertId);
 
-        res.redirect('/');
+        // res.redirect('/personas/lghjgh');xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        res.redirect('/listservice');
     } catch (error) {
         console.error("Error en la inserción:", error);
         res.status(500).json({ message: error.message });
@@ -240,6 +241,21 @@ router.post('/client', async (req, res) => {
     console.log(`Usuario : ${client_actual.fecha}`);
     console.log(`Usuariotelefono  : ${valorxz}`);
 
+    //--------------------------
+    // esto es para que cuando un cliente se registre sus datos ya esten agregados cuando se agrega el servicio esto agiliza mas rapidez
+
+    client_reg.fecha = client_actual.fecha;
+    client_reg.nombre = client_actual.nombre;
+    client_reg.telefono = client_actual.telefono;
+    client_reg.ubicacion = client_actual.ubicacion;
+    client_reg.correo = client_actual.correo;
+    client_reg.cedula = client_actual.cedula;
+    // falta el id del cliente
+    //-----------------------------
+
+
+
+
 
     // Ejecución de la consulta con parámetros
     let usuarioId;
@@ -263,6 +279,8 @@ router.post('/client', async (req, res) => {
 
             // 2. Si existe, actualizar
             usuarioId = rows1[0].id_cliente; // antes era const
+
+            client_reg.id_cliente = usuarioId;//********************* */
 
 
             const query = `UPDATE clientes SET name = ?, address = ?, correo = ?, fecha = ?, cedula = ? WHERE id_cliente = ?`;
@@ -288,6 +306,9 @@ router.post('/client', async (req, res) => {
                 console.log("Usuario agregado correctamente con ID:", result.insertId);
 
                 usuarioId = result.insertId
+
+                client_reg.id_cliente = usuarioId;//********************** */
+
                 // res.json({ mensaje: "Usuario agregado correctamente.", id: result.insertId });
             } else {
                 console.log("Error al insertar usuario.");
@@ -652,7 +673,7 @@ router.get('/listservice', async (req, res) => {
             FROM servicios
             WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
           
-            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto', 'repuestos', 'reparando', 'reparado', 'entregado'), f_in ASC
+            ORDER BY FIELD(estatus, 'recibido', 'revisado', 'presupuesto', 'repuestos', 'reparar', 'reparado', 'irreparable','entregado'), f_in ASC
         `;
 
         const [result] = await pool.query(query);

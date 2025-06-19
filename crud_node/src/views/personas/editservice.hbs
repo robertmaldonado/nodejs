@@ -184,6 +184,18 @@
                             <option value="bateria" {{#if (eq servicio.equipo "bateria" )}}selected{{/if}}>
                                 bateria
                             </option>
+                            <option value="licuadora" {{#if (eq servicio.equipo "licuadora" )}}selected{{/if}}>
+                                licuadora
+                            </option>
+                            <option value="horno" {{#if (eq servicio.equipo "horno" )}}selected{{/if}}>
+                                horno
+                            </option>
+                            <option value="otro" {{#if (eq servicio.equipo "otro" )}}selected{{/if}}>
+                                otro
+                            </option>
+                            <option value="olla" {{#if (eq servicio.equipo "olla" )}}selected{{/if}}>
+                                olla
+                            </option>
 
 
 
@@ -201,7 +213,7 @@
                             </option>
 
 
-                            <option value="revision" {{#if (eq servicio.estatus "revision" )}}selected{{/if}}>Revision
+                            <option value="revisado" {{#if (eq servicio.estatus "revisado" )}}selected{{/if}}>revisado
                             </option>
 
 
@@ -232,8 +244,8 @@
 
 
 
-                            <option value="reparando" {{#if (eq servicio.estatus "reparando" )}}selected{{/if}}>
-                                reparando
+                            <option value="reparar" {{#if (eq servicio.estatus "reparar" )}}selected{{/if}}>
+                                reparar
                             </option>
 
 
@@ -344,11 +356,48 @@
                                 niu
                             </option>
 
-                               <option value="niu" {{#if (eq servicio.marca "delonghi" )}}selected{{/if}}>
+                            <option value="niu" {{#if (eq servicio.marca "delonghi" )}}selected{{/if}}>
                                 Delonghi
                             </option>
 
- 
+                            <option value="sankey" {{#if (eq servicio.marca "sankey" )}}selected{{/if}}>
+                                sankey
+                            </option>
+
+
+                            <option value="nutribullet" {{#if (eq servicio.marca "nutribullet" )}}selected{{/if}}>
+                                nutribullet
+                            </option>
+                            <option value="rca" {{#if (eq servicio.marca "rca" )}}selected{{/if}}>
+                                rca
+                            </option>
+
+
+                            <option value="percutti" {{#if (eq servicio.marca "percutti" )}}selected{{/if}}>
+                                percutti
+                            </option>
+
+                            <option value="ninja" {{#if (eq servicio.marca "ninja" )}}selected{{/if}}>
+                                ninja
+                            </option>
+
+
+
+                            <option value="Instant Pot" {{#if (eq servicio.marca "Instant Pot" )}}selected{{/if}}>
+                                Instant Pot
+                            </option>
+
+                            <option value="premier" {{#if (eq servicio.marca "premier" )}}selected{{/if}}>
+                                premier
+                            </option>
+
+
+
+                            <option value="percutti" {{#if (eq servicio.marca "percutti" )}}selected{{/if}}>
+                                percutti
+                            </option>
+
+
 
                         </select>
                     </div>
