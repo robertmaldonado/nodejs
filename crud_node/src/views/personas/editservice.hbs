@@ -397,6 +397,10 @@
                                 percutti
                             </option>
 
+                            <option value="panasonic" {{#if (eq servicio.marca "panasonic" )}}selected{{/if}}>
+                                panasonic
+                            </option>
+
 
 
                         </select>
@@ -474,8 +478,9 @@
                     </div>
                     <div class="col-md-4">
                         <label for="met_pg" class="form-label">Metodo de pago</label>
-                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example">
-                            {{!-- <option selected>Selecciona un nivel</option> --}}
+                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example"
+                            >
+                            <option value="">Metodo de pago</option>
 
 
                             <option value="yappyr" {{#if (eq servicio.met_pg "yappyr" )}}selected{{/if}}>yappyr
@@ -492,7 +497,8 @@
                             <option value="ach" {{#if (eq servicio.met_pg "ach" )}}selected{{/if}}>ach
                             </option>
 
-                            <option value="efectivo" {{#if (eq servicio.met_pg "efectivo" )}}selected{{/if}}>Efectivo
+                            <option value="efectivo" {{#if (eq servicio.met_pg "efectivo" )}}selected{{/if}}>
+                                Efectivo
                             </option>
 
                         </select>
