@@ -69,3 +69,55 @@ ALTER TABLE clientes ADD UNIQUE (correo);
 ALTER TABLE `clientes` ADD UNIQUE(`telefono`);
 
 
+
+SELECT
+    id_servicio,
+    equipo,
+    estatus,
+    marca,
+    falla,
+    dano,
+    DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in,
+    presup
+FROM
+    servicios
+WHERE
+    f_in >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+ORDER BY
+    FIELD(
+        estatus,
+        'recibido',
+        'revisado',
+        'presupuesto',
+        'repuestos',
+        'reparar',
+        'reparado',
+        'irreparable',
+        'reciclado',
+        'abandonado',
+        'entregado'
+    ),
+    f_in ASC;
+
+    
+        const query = `
+    SELECT
+        id_servicio,
+        equipo,
+        estatus,
+        marca,
+        falla,
+        dano,
+        DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in,
+        presup
+    FROM
+        servicios
+    WHERE
+        f_in >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+    ORDER BY
+        FIELD(estatus, 'recibido', 'revisado', 'presupuesto', 'repuestos', 'reparar', 'reparado', 'irreparable', 'reciclado', 'abandonado', 'entregado'),
+        f_in ASC;
+`;
+
+
+

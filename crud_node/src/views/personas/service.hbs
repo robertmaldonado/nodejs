@@ -215,21 +215,48 @@
                     </div>
 
                     <div class="col-md-4">
+
+
                         <label for="marca" class="form-label">Marca</label>
-                        <select class="form-select" id="marca" name="marca" aria-label="Default select example">
-                            <option selected>Selecciona un nivel</option>
-                            <option value="lg" selected>LG</option>
-                            <option value="samsung">SAMSUNG</option>
-                            <option value="sony">sony</option>
-                            <option value="generico">generico</option>
-                            <option value="mystic">mystic</option>
-                            <option value="lasko">lasko</option>
-                            <option value="gourmia">gourmia</option>
-                            <option value="hisense">hisense</option>
-                            <option value="selectron">selectron</option>
-                            <option value="niu">niu</option>
-                        </select>
+                        <input class="form-control" list="datalistOptions" id="marca" name="marca"
+                            placeholder="Type to search..." required value="">
+                        <datalist id="datalistOptions">
+
+
+                            <option value="Gourmia"></option>
+                            <option value="Hisense"></option>
+                            <option value="Lasko"></option>
+                            <option value="LG"></option>
+                            <option value="Mystic"></option>
+                            <option value="Niu"></option>
+                            <option value="Samsung"></option>
+                            <option value="Selectron"></option>
+                            <option value="Sony"></option>
+                            <option value="Sankey"></option>
+                            <option value="Panasonic"></option>
+                            <option value="Oster"></option>
+                            <option value="Nisato"></option>
+                            <option value="Premier"></option>
+                            <option value="Aiwa"></option>
+                            <option value="Dolce gusto"></option>
+                            <option value="Jvc"></option>
+                            <option value="Daewoo"></option>
+                            <option value="Premium"></option>
+                            <option value="Nutribullet"></option>
+                            <option value="Percutti"></option>
+                            <option value="Rca"></option>
+                            <option value="Ninja"></option>
+                            <option value="Instant Pot"></option>
+                            <option value="delonghi"></option>
+                        </datalist>
+
+
+
+
+
                     </div>
+
+
                 </div>
 
                 <!-- Segunda fila -->
@@ -260,7 +287,7 @@
 
                     <div class="col-md-2">
                         <label for="abono" class="form-label">Pago Abono</label>
-                        <input type="number" class="form-control" id="abono" name="abono" value="0" placeholder="">
+                        <input type="number" class="form-control" id="abono" name="abono" value="" placeholder="">
                     </div>
 
                     <div class="col-md-2">
@@ -272,7 +299,7 @@
                     <div class="col-md-2">
                         <label for="pfinal" class="form-label">Pago final</label>
 
-                        <input type="number" class="form-control" id="pfinal" name="pfinal" value="0" placeholder="">
+                        <input type="number" class="form-control" id="pfinal" name="pfinal" value="" placeholder="">
                     </div>
                     <div class="col-md-2">
                         <label for="fpfinal" class="form-label">Fecha pago final</label>
@@ -280,7 +307,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="prevision" class="form-label"> Pago Revision</label>
-                        <input type="number" class="form-control" id="prevision" name="prevision" value="0"
+                        <input type="number" class="form-control" id="prevision" name="prevision" value=""
                             placeholder="">
                     </div>
                     <div class="col-md-2">
@@ -297,7 +324,7 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="costo" class="form-label">Costos</label>
-                        <input type="number" class="form-control" id="costo" value="0" name="costo">
+                        <input type="number" class="form-control" id="costo" value="" name="costo">
                     </div>
                     <div class="col-md-4">
                         <label for="met_pg" class="form-label">Metodo de pago</label>

@@ -230,6 +230,12 @@
                                 reciclado
                             </option>
 
+                            <option value="abandonado" {{#if (eq servicio.estatus "abandonado" )}}selected{{/if}}>
+                                abandonado
+                            </option>
+
+
+
 
 
                             <option value="presupuesto" {{#if (eq servicio.estatus "presupuesto" )}}selected{{/if}}>
@@ -307,104 +313,52 @@
                     </div>
 
                     <div class="col-md-4">
+
+
+
+
                         <label for="marca" class="form-label">Marca</label>
-                        <select class="form-select" id="marca" name="marca" aria-label="Default select example">
-                            {{!-- <option selected>Selecciona un nivel</option> --}}
+                        <input class="form-control" list="datalistOptions" id="marca" name="marca"
+                            placeholder="Type to search..." required value="{{servicio.marca}}">
+                        <datalist id="datalistOptions">
+
+
+                            <option value="Gourmia"></option>
+                            <option value="Hisense"></option>
+                            <option value="Lasko"></option>
+                            <option value="LG"></option>
+                            <option value="Mystic"></option>
+                            <option value="Niu"></option>
+                            <option value="Samsung"></option>
+                            <option value="Selectron"></option>
+                            <option value="Sony"></option>
+                            <option value="Sankey"></option>
+                            <option value="Panasonic"></option>
+                            <option value="Oster"></option>
+                            <option value="Nisato"></option>
+                            <option value="Premier"></option>
+                            <option value="Aiwa"></option>
+                            <option value="Dolce gusto"></option>
+                            <option value="Jvc"></option>
+                            <option value="Daewoo"></option>
+                            <option value="Premium"></option>
+                            <option value="Nutribullet"></option>
+                            <option value="Percutti"></option>
+                            <option value="Rca"></option>
+                            <option value="Ninja"></option>
+                            <option value="Instant Pot"></option>
+                            <option value="delonghi"></option>
+                        </datalist>
 
 
 
-                            <option value="lg" {{#if (eq servicio.marca "lg" )}}selected{{/if}}>
-                                lg
-                            </option>
-
-
-
-                            <option value="samsung" {{#if (eq servicio.marca "samsung" )}}selected{{/if}}>
-                                samsung
-                            </option>
 
 
 
 
-                            <option value="sony" {{#if (eq servicio.marca "sony" )}}selected{{/if}}>
-                                sony
-                            </option>
-
-                            <option value="generico" {{#if (eq servicio.marca "generico" )}}selected{{/if}}>
-                                generico
-                            </option>
-
-                            <option value="mystic" {{#if (eq servicio.marca "mystic" )}}selected{{/if}}>
-                                mystic
-                            </option>
-                            <option value="lasko" {{#if (eq servicio.marca "lasko" )}}selected{{/if}}>
-                                lasko
-                            </option>
-
-                            <option value="gourmia" {{#if (eq servicio.marca "gourmia" )}}selected{{/if}}>
-                                gourmia
-                            </option>
-                            <option value="hisense" {{#if (eq servicio.marca "hisense" )}}selected{{/if}}>
-                                hisense
-                            </option>
-
-                            <option value="selectron" {{#if (eq servicio.marca "selectron" )}}selected{{/if}}>
-                                selectron
-                            </option>
-
-                            <option value="niu" {{#if (eq servicio.marca "niu" )}}selected{{/if}}>
-                                niu
-                            </option>
-
-                            <option value="niu" {{#if (eq servicio.marca "delonghi" )}}selected{{/if}}>
-                                Delonghi
-                            </option>
-
-                            <option value="sankey" {{#if (eq servicio.marca "sankey" )}}selected{{/if}}>
-                                sankey
-                            </option>
-
-
-                            <option value="nutribullet" {{#if (eq servicio.marca "nutribullet" )}}selected{{/if}}>
-                                nutribullet
-                            </option>
-                            <option value="rca" {{#if (eq servicio.marca "rca" )}}selected{{/if}}>
-                                rca
-                            </option>
-
-
-                            <option value="percutti" {{#if (eq servicio.marca "percutti" )}}selected{{/if}}>
-                                percutti
-                            </option>
-
-                            <option value="ninja" {{#if (eq servicio.marca "ninja" )}}selected{{/if}}>
-                                ninja
-                            </option>
-
-
-
-                            <option value="Instant Pot" {{#if (eq servicio.marca "Instant Pot" )}}selected{{/if}}>
-                                Instant Pot
-                            </option>
-
-                            <option value="premier" {{#if (eq servicio.marca "premier" )}}selected{{/if}}>
-                                premier
-                            </option>
-
-
-
-                            <option value="percutti" {{#if (eq servicio.marca "percutti" )}}selected{{/if}}>
-                                percutti
-                            </option>
-
-                            <option value="panasonic" {{#if (eq servicio.marca "panasonic" )}}selected{{/if}}>
-                                panasonic
-                            </option>
-
-
-
-                        </select>
                     </div>
+
+
                 </div>
 
                 <!-- Segunda fila -->
@@ -478,8 +432,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="met_pg" class="form-label">Metodo de pago</label>
-                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example"
-                            >
+                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example">
                             <option value="">Metodo de pago</option>
 
 

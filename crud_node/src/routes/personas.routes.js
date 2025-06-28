@@ -665,16 +665,33 @@ router.get('/listservice', async (req, res) => {
             FROM servicios
             WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
             AND estatus != 'entregado'
-            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC
-        `;
+            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC`
+
+            ;
+
 
         const query = `
-            SELECT id_servicio, equipo, estatus, marca, falla, dano, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
-            FROM servicios
-            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
-          
-            ORDER BY FIELD(estatus, 'recibido', 'revisado', 'presupuesto', 'repuestos', 'reparar', 'reparado', 'irreparable','entregado'), f_in ASC
-        `;
+    SELECT
+        id_servicio,
+        equipo,
+        estatus,
+        marca,
+        falla,
+        dano,
+        DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in,
+        presup
+    FROM
+        servicios
+    WHERE
+       estatus != 'entregado'
+    ORDER BY
+        FIELD(estatus, 'recibido', 'revisado', 'presupuesto', 'repuestos', 'reparar', 'reparado', 'irreparable', 'reciclado', 'abandonado', 'entregado'),
+        f_in ASC;
+`;
+
+
+
+
 
         const [result] = await pool.query(query);
 

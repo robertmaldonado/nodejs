@@ -45,8 +45,20 @@ const hbsConfig = {
     layoutsDir: join(__dirname, 'views', 'layouts'),
     partialsDir: join(__dirname, 'views', 'partials'),
     extname: '.hbs',
+
+
+    // helpers: {
+    //     eq: (a, b) => a === b // Compara si a y b son iguales
+    // }
+
     helpers: {
-        eq: (a, b) => a === b // Compara si a y b son iguales
+        eq: (a, b) => {
+            // Convertimos ambos valores a cadenas (por si acaso no lo son)
+            // y luego a minúsculas antes de compararlos.
+            const stringA = String(a).toLowerCase();
+            const stringB = String(b).toLowerCase();
+            return stringA === stringB;
+        }
     }
 
 
