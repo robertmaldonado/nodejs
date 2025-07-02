@@ -3,8 +3,14 @@ import express from 'express'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { engine } from 'express-handlebars';  // la manera mas moderna de importaerlka
+import handlebars from 'handlebars'; // esto importa el motor base
+
 import morgan from 'morgan';
 import personasRoutes from './routes/personas.routes.js'
+
+//import { registerHelpers } from './src/helpers/hbsHelpers.js';
+import { registerHelpers } from './helpers/hbsHelpers.js';
+
 
 
 
@@ -40,34 +46,33 @@ app.set('view engine', '.hbs'); */
 
 
 // Configuración del motor de plantillas Handlebars
-const hbsConfig = {
+const hbs = engine({
     defaultLayout: 'main',
     layoutsDir: join(__dirname, 'views', 'layouts'),
     partialsDir: join(__dirname, 'views', 'partials'),
-    extname: '.hbs',
+    extname: '.hbs'
 
 
-    // helpers: {
-    //     eq: (a, b) => a === b // Compara si a y b son iguales
-    // }
-
-    helpers: {
-        eq: (a, b) => {
-            // Convertimos ambos valores a cadenas (por si acaso no lo son)
-            // y luego a minúsculas antes de compararlos.
-            const stringA = String(a).toLowerCase();
-            const stringB = String(b).toLowerCase();
-            return stringA === stringB;
-        }
-    }
-
-
-};
+});
 
 
 
-app.engine('.hbs', engine(hbsConfig));
+//----------------
+//app.engine('.hbs', hbsEngine);
+//app.set('view engine', '.hbs');
+
+
+//-----------------
+
+
+
+app.engine('.hbs', hbs);
+//app.engine('.hbs', hbsConfig);
 app.set('view engine', '.hbs');
+
+//registerHelpers(hbs.handlebars); // Aquí registras todos tus helpers
+
+registerHelpers(handlebars); // OJO: usa 'handlebars' directamente (el motor base)
 
 
 
