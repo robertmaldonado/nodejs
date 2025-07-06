@@ -18,9 +18,18 @@ export function registerHelpers(hbs) {
             case 'presupuesto': return 'table-secondary';
             case 'abandonado': return 'table-danger';
             case 'recibido': return 'table-warning';
+            case 'reparado': return 'table-danger';
             default: return '';
         }
     });
+
+
+    // 🆕 Nuevo helper para marcar <option selected>
+    hbs.registerHelper('isSelected', function (actual, valor) {
+        if (!actual || !valor) return '';
+        return String(actual).toLowerCase() === String(valor).toLowerCase() ? 'selected' : '';
+    });
+
 }
 
 

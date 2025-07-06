@@ -382,8 +382,99 @@
 
                 </div>
 
+                <div class="h4 pb-2 mb-4 text-danger border-bottom border-danger">
+                    Datos para el pago
+                </div>
 
-                <!-- Primera fila -->
+
+
+
+                <!-- Primera fila  datos de pagos-->
+                <div class="row mb-3">
+
+
+                    <div class="col-md-2">
+                        <label for="fprevision" class="form-label">Fecha Revision</label>
+
+                        <input type="date" class="form-control" name="fprevision" value="{{servicio.fprevision}}"
+                            id="fprevision">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="prevision" class="form-label">Monto </label>
+                        <input type="number" class="form-control" id="prevision" name="prevision"
+                            value="{{servicio.prevision}}">
+                    </div>
+
+                    <div class="col-md-1">
+                        <label for="met_pgrv" class="form-label">M pago</label>
+                        <select class="form-select" id="met_pgrv" name="met_pgrv" aria-label="Default select example">
+
+                            <option value="">Metodo de pago</option>
+                            <option value="yappyr">YR - (yappy roberto)</option>
+                            <option value="yappym">YM - (yappy maria)</option>
+                            <option value="ach">ACH</option>
+                            <option value="efectivo">Efectivo</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="fpabono" class="form-label">Fecha abono</label>
+
+                        <input type="date" class="form-control" name="fpabono" value="{{servicio.fpabono}}"
+                            id="fpabono">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="abono" class="form-label">Pago </label>
+                        <input type="number" class="form-control" id="abono" name="abono" value="{{servicio.abono}}">
+                    </div>
+
+                    <div class="col-md-1">
+                        <label for="met_pgab" class="form-label">M pago</label>
+                        <select class="form-select" id="met_pgab" name="met_pgab" aria-label="Default select example">
+
+                            <option value="">Metodo de pago</option>
+                            <option value="yappyr">YR - (yappy roberto)</option>
+                            <option value="yappym">YM - (yappy maria)</option>
+                            <option value="ach">ACH</option>
+                            <option value="efectivo">Efectivo</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="fpfinal" class="form-label">Fecha Pago final</label>
+
+                        <input type="date" class="form-control" name="fpfinal" value="{{servicio.fpfinal}}"
+                            id="fpfinal">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="pfinal" class="form-label">Pago </label>
+                        <input type="number" class="form-control" id="pfinal" name="pfinal" value="{{servicio.pfinal}}">
+                    </div>
+
+                    <div class="col-md-1">
+                        <label for="met_pgfn" class="form-label">M pago</label>
+                        <select class="form-select" id="met_pgfn" name="met_pgfn" aria-label="Default select example">
+
+                            <option value="">Metodo de pago</option>
+                            <option value="yappyr">YR - (yappy roberto)</option>
+                            <option value="yappym">YM - (yappy maria)</option>
+                            <option value="ach">ACH</option>
+                            <option value="efectivo">Efectivo</option>
+                        </select>
+                    </div>
+
+
+
+                </div>
+
+                <div class="h4 pb-2 mb-4 text-danger border-bottom border-danger">
+                    xzcczfcz
+                </div>
+
+
+
+                {{!-- <!-- Primera fila  -->
                 <div class="row mb-3">
 
                     <div class="col-md-2">
@@ -419,7 +510,7 @@
                             id="fprevision">
                     </div>
 
-                </div>
+                </div> --}}
 
 
 
@@ -432,29 +523,19 @@
                     </div>
                     <div class="col-md-4">
                         <label for="met_pg" class="form-label">Metodo de pago</label>
-                        <select class="form-select" id="met_pg" name="met_pg" aria-label="Default select example">
+
+
+                        <select class="form-select" id="met_pg" name="met_pg">
                             <option value="">Metodo de pago</option>
-
-
-                            <option value="yappyr" {{#if (eq servicio.met_pg "yappyr" )}}selected{{/if}}>yappyr
+                            <option value="yappyr" {{isSelected servicio.met_pg 'yappyr' }}>YR - (yappy roberto)
                             </option>
-
-
-
-                            <option value="yappym" {{#if (eq servicio.met_pg "yappym" )}}selected{{/if}}>yappym
-                            </option>
-
-
-
-
-                            <option value="ach" {{#if (eq servicio.met_pg "ach" )}}selected{{/if}}>ach
-                            </option>
-
-                            <option value="efectivo" {{#if (eq servicio.met_pg "efectivo" )}}selected{{/if}}>
-                                Efectivo
-                            </option>
-
+                            <option value="yappym" {{isSelected servicio.met_pg 'yappym' }}>YM - (yappy maria)</option>
+                            <option value="ach" {{isSelected servicio.met_pg 'ach' }}>ACH</option>
+                            <option value="efectivo" {{isSelected servicio.met_pg 'Efectivo' }}>Efectivo</option>
                         </select>
+
+
+
                     </div>
 
                     <div class="col-md-4">
