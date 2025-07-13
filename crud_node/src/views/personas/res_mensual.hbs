@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <h4 class="mb-3">Resumen de ingresos mensuales</h4>
+
+    <table class="table table-bordered text-center">
+        <thead class="table-light">
+            <tr>
+                <th>Mes</th>
+                <th>Yappy-R</th>
+                <th>Yappy-M</th>
+                <th>ACH</th>
+                <th>Efectivo</th>
+                <th>Total del mes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each resumenMensual}}
+            <tr>
+                <td>{{mes}}</td>
+                <td>${{total_yappyr}}</td>
+                <td>${{total_yappym}}</td>
+                <td>${{total_ach}}</td>
+                <td>${{total_efectivo}}</td>
+                <td><strong>${{total_mes}}</strong></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

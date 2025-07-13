@@ -106,7 +106,7 @@ router.post('/serviceedit', async (req, res) => {       // para editar servicio
     try {
         const requiredFields = ["id_cliente", "id_servicio", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos",
             "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano",
-            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal"];
+            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal", "met_pgrv", "met_pgab", "met_pgfn"];
 
         const newService = Object.fromEntries(
             requiredFields.map(field => [field, req.body[field] || null])
@@ -771,6 +771,131 @@ router.get('/edit/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+router.get('/diario', async (req, res) => {
+
+
+
+
+    const query = `SELECT 
+  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_dia
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;`;
+
+    try {
+
+        const [resultadoSQL] = await pool.query(query);
+
+        res.render('personas/res_diario', { resumen: resultadoSQL });
+
+        console.log("diarios:", resultadoSQL);
+        // return result;
+    } catch (error) {
+        console.error("Error obteniendo servicios:", error);
+    }
+
+});
+
+router.get('/mensual', async (req, res) => {
+
+
+
+
+    const query = `SELECT 
+  DATE_FORMAT(fecha, '%Y-%m') AS mes,  -- 👈 cambia agrupación por mes
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_mes
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY mes
+ORDER BY mes DESC;
+`;
+
+    try {
+
+        const [resultadoSQL] = await pool.query(query);
+
+        res.render('personas/res_mensual', { resumenMensual: resultadoSQL });
+
+        console.log("diarios:", resultadoSQL);
+        // return result;
+    } catch (error) {
+        console.error("Error obteniendo servicios:", error);
+    }
+
+});
+
+
+
+//resumendiario administracion  ******************************************
+//res.render('resumen', { resumen: resultadoSQL });
+
+
+
+// Cada objeto debe tener estas claves:
+
+// {
+//   dia: '2025-06-10',
+//   total_transferencia: 1200,
+//   total_efectivo: 800,
+//   total_ach: 500,
+//   total_dia: 2500,
+//   total_costos: 1500,
+//   utilidad: 1000
+// }
+
+
+
+
+
+
+
+
+
+
 
 router.post('/edit/:id', async (req, res) => {
     try {

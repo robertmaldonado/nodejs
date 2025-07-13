@@ -121,3 +121,282 @@ ORDER BY
 
 
 
+
+
+
+
+
+
+FROM (
+  SELECT fecha1 AS fecha, monto1 AS monto, metodo_pago1 AS metodo_pago, costo1 AS costos FROM servicios WHERE fecha1 IS NOT NULL
+  UNION ALL
+  SELECT fecha2, monto2, metodo_pago2, costo2 FROM servicios WHERE fecha2 IS NOT NULL
+  UNION ALL
+  SELECT fecha3, monto3, metodo_pago3, costo3 FROM servicios WHERE fecha3 IS NOT NULL
+) AS pagos    -- <-- Este es el alias de la tabla virtual resultante
+
+
+
+SELECT
+  fecha,
+  SUM(CASE WHEN LOWER(metodo_pago) IN ('transferencia', 'yappyr', 'yappym') THEN monto ELSE 0 END) AS total_transferencia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(monto) AS total_dia,
+  SUM(costos) AS total_costos,
+  SUM(monto) - SUM(costos) AS utilidad
+FROM (
+  -- ... (Aquí va la subconsulta UNION ALL que explicamos antes) ...
+) AS pagos -- Estamos consultando esta tabla virtual 'pagos'
+GROUP BY fecha
+ORDER BY fecha DESC;
+
+
+
+
+
+
+---------------------------------
+chatgpt
+SELECT 
+  fecha AS dia,
+  SUM(CASE WHEN metodo_pago = 'transferencia' THEN monto ELSE 0 END) AS total_transferencia,
+  SUM(CASE WHEN metodo_pago = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(CASE WHEN metodo_pago = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(monto) AS total_dia,
+  SUM(costo) AS total_costos,
+  SUM(monto) - SUM(costo) AS utilidad
+FROM (
+  SELECT fecha1 AS fecha, monto1 AS monto, metodo_pago1 AS metodo_pago, costo FROM servicios
+  WHERE fecha1 IS NOT NULL AND monto1 IS NOT NULL
+
+  UNION ALL
+
+  SELECT fecha2, monto2, metodo_pago2, costo FROM servicios
+  WHERE fecha2 IS NOT NULL AND monto2 IS NOT NULL
+
+  UNION ALL
+
+  SELECT fecha3, monto3, metodo_pago3, costo FROM servicios
+  WHERE fecha3 IS NOT NULL AND monto3 IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;
+
+| dia        | total\_transferencia | total\_efectivo | total\_ach | total\_dia | total\_costos | utilidad |
+| ---------- | -------------------- | --------------- | ---------- | ---------- | ------------- | -------- |
+| 2025-06-10 | 1200                 | 800             | 500        | 2500       | 1500          | 1000     |
+| 2025-06-09 | 2000                 | 0               | 700        | 2700       | 1700          | 1000     |
+| ...        | ...                  | ...             | ...        | ...        | ...           | ...      |
+
+------------------------------------------
+
+copilot
+
+SELECT
+  fecha AS dia,
+  SUM(CASE WHEN LOWER(metodo_pago) IN ('transferencia', 'yappyr', 'yappym') THEN monto ELSE 0 END) AS total_transferencia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(monto) AS total_dia,
+  SUM(costos) AS total_costos,
+  SUM(monto) - SUM(costos) AS utilidad
+FROM (
+  SELECT 
+    fecha1 AS fecha, 
+    monto1 AS monto, 
+    metodo_pago1 AS metodo_pago, 
+    IFNULL(costo1, 0) AS costos
+  FROM servicios
+  WHERE fecha1 IS NOT NULL
+
+  UNION ALL
+
+  SELECT 
+    fecha2, 
+    monto2, 
+    metodo_pago2, 
+    IFNULL(costo2, 0)
+  FROM servicios
+  WHERE fecha2 IS NOT NULL
+
+  UNION ALL
+
+  SELECT 
+    fecha3, 
+    monto3, 
+    metodo_pago3, 
+    IFNULL(costo3, 0)
+  FROM servicios
+  WHERE fecha3 IS NOT NULL
+) AS pagos
+GROUP BY fecha
+ORDER BY fecha DESC;
+
+
+
+*************************modificando  
+
+
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_dia,
+  SUM(costos) AS total_costos,
+  SUM(monto) - SUM(costos) AS utilidad
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago, IFNULL(costo, 0) AS costos FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab, IFNULL(costo, 0) FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL  AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn, IFNULL(costo, 0) FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;
+
+
+
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN  LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_dia,
+  SUM(costos) AS total_costos,
+  SUM(monto) - SUM(costos) AS utilidad
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago, IFNULL(costo, 0) AS costos FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL  AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;
+
+
+
+
+
+
+
+SELECT 
+  DATE_FORMAT(pagos.fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_dia,
+  SUM(DISTINCT IFNULL(costo, 0)) AS total_costos,
+  SUM(monto) - SUM(DISTINCT IFNULL(costo, 0)) AS utilidad
+FROM (
+  SELECT id, fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT id, fpabono, abono, met_pgab FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT id, fpfinal, pfinal, met_pgfn FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos
+JOIN servicios ON pagos.id = servicios.id
+WHERE pagos.fecha >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;
+
+
+--------------------------------------------------------
+sin costos ni utilidad
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_dia
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY dia
+ORDER BY dia DESC;
+
+
+
+
+
+✅ Consulta actualizada para resumen mensual
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m') AS mes,  -- 👈 cambia agrupación por mes
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_mes
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY mes
+ORDER BY mes DESC;
+
+

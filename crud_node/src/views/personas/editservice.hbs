@@ -148,59 +148,35 @@
 
                     <div class="col-md-2">
                         <label for="equipo" class="form-label">equipo</label>
-                        <select class="form-select" id="equipo" name="equipo" aria-label="Default select example">
-                            <option selected>Selecciona un nivel</option>
 
 
-                            <option value="tv" {{#if (eq servicio.equipo "tv" )}}selected{{/if}}>Tv </option>
-                            <option value="freidora" {{#if (eq servicio.equipo "freidora" )}}selected{{/if}}>Freidora
-                            </option>
+                        <input class="form-control" list="datalistOptionsequipo" id="equipo" name="equipo"
+                            placeholder="Type to search..." required value="{{servicio.equipo}}">
 
-                            <option value="cafetera" {{#if (eq servicio.equipo "cafetera" )}}selected{{/if}}>Cafetera
-                            </option>
 
-                            <option value="abanico" {{#if (eq servicio.equipo "abanico" )}}selected{{/if}}>Abanico
-                            </option>
+                        <datalist id="datalistOptionsequipo">
 
-                            <option value="vinera" {{#if (eq servicio.equipo "vinera" )}}selected{{/if}}>Vinera
-                            </option>
 
-                            <option value="monitor" {{#if (eq servicio.equipo "monitor" )}}selected{{/if}}>Monitor
-                            </option>
-                            <option value="microonda" {{#if (eq servicio.equipo "microonda" )}}selected{{/if}}>
-                                microonda
-                            </option>
-                            <option value="sonido" {{#if (eq servicio.equipo "sonido" )}}selected{{/if}}>
-                                sonido
-                            </option>
-                            <option value="trituradora papel" {{#if (eq servicio.equipo "trituradora papel"
-                                )}}selected{{/if}}>
-                                trituradora papel
-                            </option>
-                            <option value="fabricador hielo" {{#if (eq servicio.equipo "fabricador hielo"
-                                )}}selected{{/if}}>
-                                fabricador hielo
-                            </option>
-                            <option value="bateria" {{#if (eq servicio.equipo "bateria" )}}selected{{/if}}>
-                                bateria
-                            </option>
-                            <option value="licuadora" {{#if (eq servicio.equipo "licuadora" )}}selected{{/if}}>
-                                licuadora
-                            </option>
-                            <option value="horno" {{#if (eq servicio.equipo "horno" )}}selected{{/if}}>
-                                horno
-                            </option>
-                            <option value="otro" {{#if (eq servicio.equipo "otro" )}}selected{{/if}}>
-                                otro
-                            </option>
-                            <option value="olla" {{#if (eq servicio.equipo "olla" )}}selected{{/if}}>
-                                olla
-                            </option>
+                            <option value="tv"></option>
+                            <option value="freidora"></option>
+                            <option value="cafetera"></option>
+                            <option value="abanico"></option>
+                            <option value="vinera"></option>
+                            <option value="monitor"></option>
+                            <option value="microonda"></option>
+                            <option value="sonido"></option>
+                            <option value="trituradora papel"></option>
+                            <option value="fabricador hielo"></option>
+                            <option value="bateria"></option>
+                            <option value="licuadora"></option>
+                            <option value="horno"></option>
+                            <option value="olla"></option>
+                            <option value="router"></option>
+
+                        </datalist>
 
 
 
-
-                        </select>
                     </div>
 
                     <div class="col-md-2">
@@ -318,6 +294,7 @@
 
 
                         <label for="marca" class="form-label">Marca</label>
+
                         <input class="form-control" list="datalistOptions" id="marca" name="marca"
                             placeholder="Type to search..." required value="{{servicio.marca}}">
                         <datalist id="datalistOptions">
@@ -410,10 +387,12 @@
                         <select class="form-select" id="met_pgrv" name="met_pgrv" aria-label="Default select example">
 
                             <option value="">Metodo de pago</option>
-                            <option value="yappyr">YR - (yappy roberto)</option>
-                            <option value="yappym">YM - (yappy maria)</option>
-                            <option value="ach">ACH</option>
-                            <option value="efectivo">Efectivo</option>
+                            <option value="yappyr" {{isSelected servicio.met_pgrv 'yappyr' }}>YR - (yappy roberto)
+                            </option>
+                            <option value="yappym" {{isSelected servicio.met_pgrv 'yappym' }}>YM - (yappy maria)
+                            </option>
+                            <option value="ach" {{isSelected servicio.met_pgrv 'ach' }}>ACH</option>
+                            <option value="efectivo" {{isSelected servicio.met_pgrv 'efectivo' }}>Efectivo</option>
                         </select>
                     </div>
 
@@ -434,10 +413,12 @@
                         <select class="form-select" id="met_pgab" name="met_pgab" aria-label="Default select example">
 
                             <option value="">Metodo de pago</option>
-                            <option value="yappyr">YR - (yappy roberto)</option>
-                            <option value="yappym">YM - (yappy maria)</option>
-                            <option value="ach">ACH</option>
-                            <option value="efectivo">Efectivo</option>
+                            <option value="yappyr" {{isSelected servicio.met_pgab 'yappyr' }}>YR - (yappy roberto)
+                            </option>
+                            <option value="yappym" {{isSelected servicio.met_pgab 'yappym' }}>YM - (yappy maria)
+                            </option>
+                            <option value="ach" {{isSelected servicio.met_pgab 'ach' }}>ACH</option>
+                            <option value="efectivo" {{isSelected servicio.met_pgab 'efectivo' }}>Efectivo</option>
                         </select>
                     </div>
 
@@ -457,10 +438,12 @@
                         <select class="form-select" id="met_pgfn" name="met_pgfn" aria-label="Default select example">
 
                             <option value="">Metodo de pago</option>
-                            <option value="yappyr">YR - (yappy roberto)</option>
-                            <option value="yappym">YM - (yappy maria)</option>
-                            <option value="ach">ACH</option>
-                            <option value="efectivo">Efectivo</option>
+                            <option value="yappyr" {{isSelected servicio.met_pgfn 'yappyr' }}>YR - (yappy roberto)
+                            </option>
+                            <option value="yappym" {{isSelected servicio.met_pgfn 'yappym' }}>YM - (yappy maria)
+                            </option>
+                            <option value="ach" {{isSelected servicio.met_pgfn 'ach' }}>ACH</option>
+                            <option value="efectivo" {{isSelected servicio.met_pgfn 'efectivo' }}>Efectivo</option>
                         </select>
                     </div>
 
@@ -522,17 +505,12 @@
                         <input type="number" class="form-control" id="costo" value="{{servicio.costo}}" name="costo">
                     </div>
                     <div class="col-md-4">
-                        <label for="met_pg" class="form-label">Metodo de pago</label>
+
+                        <label for="pfinalz" class="form-label">facturado </label>
+                        <input type="number" class="form-control" id="pfinalz" name="pfinalz" value="">
 
 
-                        <select class="form-select" id="met_pg" name="met_pg">
-                            <option value="">Metodo de pago</option>
-                            <option value="yappyr" {{isSelected servicio.met_pg 'yappyr' }}>YR - (yappy roberto)
-                            </option>
-                            <option value="yappym" {{isSelected servicio.met_pg 'yappym' }}>YM - (yappy maria)</option>
-                            <option value="ach" {{isSelected servicio.met_pg 'ach' }}>ACH</option>
-                            <option value="efectivo" {{isSelected servicio.met_pg 'Efectivo' }}>Efectivo</option>
-                        </select>
+
 
 
 
