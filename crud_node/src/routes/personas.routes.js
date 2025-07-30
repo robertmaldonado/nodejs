@@ -106,7 +106,7 @@ router.post('/serviceedit', async (req, res) => {       // para editar servicio
     try {
         const requiredFields = ["id_cliente", "id_servicio", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos",
             "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano",
-            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal", "met_pgrv", "met_pgab", "met_pgfn"];
+            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal", "met_pgrv", "met_pgab", "met_pgfn", "facturado"];
 
         const newService = Object.fromEntries(
             requiredFields.map(field => [field, req.body[field] || null])
