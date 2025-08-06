@@ -227,6 +227,45 @@ ORDER BY año DESC;
 
 
 
+SELECT fecha1 AS fecha, monto1 AS monto, metodo_pago1 AS metodo_pago, costo1 AS costos FROM servicios WHERE fecha1 IS NOT NULL
+UNION ALL
+SELECT fecha2, monto2, metodo_pago2, costo2 FROM servicios WHERE fecha2 IS NOT NULL
+UNION ALL
+SELECT fecha3, monto3, metodo_pago3, costo3 FROM servicios WHERE fecha3 IS NOT NULL
+
+
+
+
+
+Opción 2: Filtrar los costos solo en una parte del UNION
+Incluimos el costo solo en uno de los tres SELECT, por ejemplo en el primero (fprevision) y dejamos NULL en los otros:
+
+sql
+SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago, costo
+FROM servicios
+WHERE fprevision IS NOT NULL ...
+
+UNION ALL
+
+SELECT fpabono, abono, met_pgab, NULL
+FROM servicios
+WHERE fpabono IS NOT NULL ...
+
+UNION ALL
+
+SELECT fpfinal, pfinal, met_pgfn, NULL
+FROM servicios
+WHERE fpfinal IS NOT NULL ...
+Luego, en tu SELECT principal haces:
+
+sql
+SUM(costo) AS total_costo
+Como solo uno de los tres registros por servicio tiene el costo, el SUM() lo contará una sola vez.
+
+
+
+
+
 
 
 

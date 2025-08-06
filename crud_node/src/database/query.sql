@@ -400,3 +400,75 @@ GROUP BY mes
 ORDER BY mes DESC;
 
 
+
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'factura' THEN monto ELSE 0 END) AS total_factura,
+
+  SUM(monto) AS total_dia
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+  
+  UNION ALL 
+
+  SELECT ffactura,factura,'factura'
+  FROM servicios
+  WHERE ffactura IS NOT NULL AND factura IS NOT NULL
+
+
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY dia
+ORDER BY dia DESC
+
+
+
+
+
+
+SELECT 
+  DATE_FORMAT(fecha, '%Y-%m') AS mes,  --  cambia agrupación por mes
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+  SUM(monto) AS total_mes
+FROM (
+  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+  FROM servicios
+  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpabono, abono, met_pgab 
+  FROM servicios
+  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+  UNION ALL
+
+  SELECT fpfinal, pfinal, met_pgfn 
+  FROM servicios
+  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+) AS pagos_normalizados
+WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY mes
+ORDER BY mes DESC;

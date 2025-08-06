@@ -106,7 +106,7 @@ router.post('/serviceedit', async (req, res) => {       // para editar servicio
     try {
         const requiredFields = ["id_cliente", "id_servicio", "equipo", "estatus", "falla", "f_in", "f_sal", "repuestos",
             "costo", "fer", "met_pg", "presup", "proced", "serial", "model", "marca", "abono", "pulg", "dano",
-            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal", "met_pgrv", "met_pgab", "met_pgfn", "facturado"];
+            "fprevision", "fpabono", "fpfinal", "prevision", "pfinal", "met_pgrv", "met_pgab", "met_pgfn", "facturado", "ffactura"];
 
         const newService = Object.fromEntries(
             requiredFields.map(field => [field, req.body[field] || null])
@@ -725,7 +725,7 @@ router.get('/editservice/:id', async (req, res) => {
         const [serviciosRows] = await pool.query(`SELECT *, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in ,
              DATE_FORMAT(f_sal, '%Y-%m-%d') AS f_sal , DATE_FORMAT(fer, '%Y-%m-%d') AS fer  ,
               DATE_FORMAT(fpabono, '%Y-%m-%d') AS fpabono ,
-               DATE_FORMAT(fpfinal, '%Y-%m-%d') AS fpfinal , DATE_FORMAT(fprevision, '%Y-%m-%d') AS fprevision  FROM servicios WHERE id_servicio = ?`, [id]);
+               DATE_FORMAT(fpfinal, '%Y-%m-%d') AS fpfinal , DATE_FORMAT(fprevision, '%Y-%m-%d') AS fprevision , DATE_FORMAT(ffactura, '%Y-%m-%d') AS ffactura   FROM servicios WHERE id_servicio = ?`, [id]);
 
 
         // Es una buena práctica desestructurar el array para obtener la fila, si esperas solo una.
@@ -778,33 +778,60 @@ router.get('/diario', async (req, res) => {
 
 
 
-    const query = `SELECT 
-  DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
-  SUM(monto) AS total_dia
-FROM (
-  SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
-  FROM servicios
-  WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
+    const query = `
+  SELECT 
+    DATE_FORMAT(fecha, '%Y-%m-%d') AS dia,
+    
+    -- Totales por método de pago
+    SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr'   THEN monto ELSE 0 END) AS total_yappyr,
+    SUM(CASE WHEN LOWER(metodo_pago) = 'yappym'   THEN monto ELSE 0 END) AS total_yappym,
+    SUM(CASE WHEN LOWER(metodo_pago) = 'ach'      THEN monto ELSE 0 END) AS total_ach,
+    SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
+    SUM(CASE WHEN LOWER(metodo_pago) = 'factura'  THEN monto ELSE 0 END) AS total_factura,
 
-  UNION ALL
+    -- Total general por día exluyendo facturas
+    -- SUM(monto) AS total_dia
+    SUM(CASE WHEN LOWER(metodo_pago) != 'factura' THEN monto ELSE 0 END) AS total_dia
 
-  SELECT fpabono, abono, met_pgab 
-  FROM servicios
-  WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
 
-  UNION ALL
+  FROM (
+    -- Pagos por previsión
+    SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
+    FROM servicios
+    WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
 
-  SELECT fpfinal, pfinal, met_pgfn 
-  FROM servicios
-  WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
-) AS pagos_normalizados
-WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-GROUP BY dia
-ORDER BY dia DESC;`;
+    UNION ALL
+
+    -- Pagos por abono
+    SELECT fpabono AS fecha, abono AS monto, met_pgab AS metodo_pago 
+    FROM servicios
+    WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
+
+    UNION ALL
+
+    -- Pagos finales
+    SELECT fpfinal AS fecha, pfinal AS monto, met_pgfn AS metodo_pago 
+    FROM servicios
+    WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+
+    UNION ALL 
+
+    -- Facturas (método fijo: 'factura')
+    SELECT ffactura AS fecha, facturado AS monto, 'factura' AS metodo_pago 
+    FROM servicios
+    WHERE ffactura IS NOT NULL AND facturado IS NOT NULL
+  ) AS pagos_normalizados
+
+  -- Filtrar por últimos 6 meses
+  WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+
+  -- Agrupamiento por día
+  GROUP BY dia
+  ORDER BY dia DESC;
+`;
+
+
+
 
     try {
 
@@ -826,33 +853,53 @@ router.get('/mensual', async (req, res) => {
 
 
     const query = `SELECT 
-  DATE_FORMAT(fecha, '%Y-%m') AS mes,  -- 👈 cambia agrupación por mes
-  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr' THEN monto ELSE 0 END) AS total_yappyr,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym' THEN monto ELSE 0 END) AS total_yappym,
-  SUM(CASE WHEN LOWER(metodo_pago) = 'ach' THEN monto ELSE 0 END) AS total_ach,
+  DATE_FORMAT(fecha, '%Y-%m') AS mes,
+
+  -- Totales por método de pago
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappyr'   THEN monto ELSE 0 END) AS total_yappyr,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'yappym'   THEN monto ELSE 0 END) AS total_yappym,
+  SUM(CASE WHEN LOWER(metodo_pago) = 'ach'      THEN monto ELSE 0 END) AS total_ach,
   SUM(CASE WHEN LOWER(metodo_pago) = 'efectivo' THEN monto ELSE 0 END) AS total_efectivo,
-  SUM(monto) AS total_mes
+  SUM(CASE WHEN LOWER(metodo_pago) = 'factura'  THEN monto ELSE 0 END) AS total_factura,
+
+  -- Total general mensual excluyendo facturas
+  SUM(CASE WHEN LOWER(metodo_pago) != 'factura' THEN monto ELSE 0 END) AS total_mes
+
 FROM (
+  -- Pagos por previsión
   SELECT fprevision AS fecha, prevision AS monto, met_pgrv AS metodo_pago 
   FROM servicios
   WHERE fprevision IS NOT NULL AND prevision IS NOT NULL AND met_pgrv IS NOT NULL
 
   UNION ALL
 
-  SELECT fpabono, abono, met_pgab 
+  -- Pagos por abono
+  SELECT fpabono AS fecha, abono AS monto, met_pgab AS metodo_pago 
   FROM servicios
   WHERE fpabono IS NOT NULL AND abono IS NOT NULL AND met_pgab IS NOT NULL
 
   UNION ALL
 
-  SELECT fpfinal, pfinal, met_pgfn 
+  -- Pagos finales
+  SELECT fpfinal AS fecha, pfinal AS monto, met_pgfn AS metodo_pago 
   FROM servicios
   WHERE fpfinal IS NOT NULL AND pfinal IS NOT NULL AND met_pgfn IS NOT NULL
+
+  UNION ALL 
+
+  -- Facturas
+  SELECT ffactura AS fecha, facturado AS monto, 'factura' AS metodo_pago 
+  FROM servicios
+  WHERE ffactura IS NOT NULL AND facturado IS NOT NULL
 ) AS pagos_normalizados
+
+-- Filtrar por últimos 6 meses
 WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+
+-- Agrupamiento por mes
 GROUP BY mes
-ORDER BY mes DESC;
-`;
+ORDER BY mes DESC;`;
+
 
     try {
 
