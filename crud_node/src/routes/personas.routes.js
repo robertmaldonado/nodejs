@@ -644,60 +644,41 @@ router.get('/listservice', async (req, res) => {
 
     try {
 
-        const queryz = `
-            SELECT equipo, marca, falla, estatus, f_in, repuestos
-            FROM servicios 
-            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            ORDER BY f_in DESC
-        `;
 
-        const query3 = `
-            SELECT equipo, estatus, marca, falla, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
-            FROM servicios
-            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            AND estatus != 'entregado'
-            ORDER BY f_in ASC
-        `;
 
-        // no muestra los equips entregados
-        const query8 = `
-            SELECT id_servicio, equipo, estatus, marca, falla, dano, DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in, presup
-            FROM servicios
-            WHERE f_in >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-            AND estatus != 'entregado'
-            ORDER BY FIELD(estatus, 'recibido', 'revision', 'presupuesto'), f_in ASC`
-
-            ;
 
 
         const query = `
-    SELECT
-        id_servicio,
-        id_cliente,
-        equipo,
-        estatus,
-        marca,
-        falla,
-        dano,
-        DATE_FORMAT(fer, '%Y-%m-%d') AS fer,
-        DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in,
-        presup,
-        DATEDIFF(f_in, CURDATE()) AS dias_restantes
-    FROM
-        servicios
-    WHERE
-       estatus != 'entregado'
-    ORDER BY
-        FIELD(estatus, 'reparar', 'recibido', 'revisado', 'presupuesto', 'repuestos', 'reparado', 'irreparable', 'reciclado', 'abandonado', 'entregado'),
-       
-        fer IS NULL,
-        fer ASC,
-       f_in ASC;
+        
+SELECT
+    id_servicio,
+    id_cliente,
+    equipo,
+    estatus,
+    marca,
+    falla,
+    dano,
+    DATE_FORMAT(fer, '%Y-%m-%d') AS fer,
+    DATE_FORMAT(f_in, '%Y-%m-%d') AS f_in,
+    DATE_FORMAT(f_sal, '%Y-%m-%d') AS f_sal,
+    presup,
+    DATEDIFF(CURDATE(), f_sal) AS dias_restantes
+FROM servicios
+WHERE
+    f_sal IS NULL
+    OR f_sal >= CURDATE() - INTERVAL 7 DAY
+ORDER BY
+    FIELD(estatus,
+        'reparar', 'recibido', 'revisado', 'presupuesto',
+        'repuestos', 'reparado', 'irreparable',
+        'reciclado', 'abandonado', 'entregado'),
+    fer IS NOT NULL DESC,  -- Prioriza los que tienen fecha estimada
+    fer,                   -- Ordena por fecha estimada (NULLs van al final)
+    f_in,                  -- Ordena por fecha de ingreso  fer ASC
+    f_sal IS NOT NULL DESC, f_sal;  -- Entregados recientes primero, NULLs al final
 
 
-        
-        
-`;
+        `;
 
 
 
